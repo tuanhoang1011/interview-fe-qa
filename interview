@@ -1,1 +1,2427 @@
-abc
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Frontend Interview Q&A — 3-4 Years Experience</title>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600&family=Syne:wght@400;600;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0d0f14;
+    --surface: #13161e;
+    --surface2: #1a1e2a;
+    --border: #252a38;
+    --accent: #4f8ef7;
+    --accent2: #f7934f;
+    --accent3: #4ff7a0;
+    --accent4: #f74f8e;
+    --text: #e2e6f0;
+    --muted: #7a8099;
+    --code-bg: #0a0c11;
+    --tag-js: rgba(79,142,247,0.15);
+    --tag-react: rgba(79,247,160,0.15);
+    --tag-ng: rgba(247,75,142,0.12);
+    --tag-perf: rgba(247,147,79,0.15);
+    --tag-auth: rgba(147,79,247,0.15);
+    --tag-bundle: rgba(79,220,247,0.15);
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.7;
+    font-size: 15px;
+  }
+
+  /* ── HERO ── */
+  .hero {
+    background: linear-gradient(135deg, #0d0f14 0%, #12182e 50%, #0d0f14 100%);
+    border-bottom: 1px solid var(--border);
+    padding: 60px 24px 48px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+  .hero::before {
+    content: '';
+    position: absolute; inset: 0;
+    background: radial-gradient(ellipse 80% 60% at 50% 0%, rgba(79,142,247,0.08), transparent);
+  }
+  .hero h1 {
+    font-family: 'Syne', sans-serif;
+    font-size: clamp(1.8rem, 5vw, 3rem);
+    font-weight: 800;
+    background: linear-gradient(135deg, #4f8ef7, #4ff7a0);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    position: relative;
+    line-height: 1.2;
+    margin-bottom: 12px;
+  }
+  .hero p {
+    color: var(--muted);
+    font-size: 14px;
+    position: relative;
+    max-width: 500px;
+    margin: 0 auto 24px;
+  }
+  .badges { display: flex; gap: 8px; justify-content: center; flex-wrap: wrap; position: relative; }
+  .badge {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    padding: 4px 12px;
+    border-radius: 20px;
+    border: 1px solid;
+    letter-spacing: 0.05em;
+  }
+  .badge-js { background: var(--tag-js); border-color: rgba(79,142,247,0.4); color: #7eb4ff; }
+  .badge-react { background: var(--tag-react); border-color: rgba(79,247,160,0.4); color: #4ff7a0; }
+  .badge-ng { background: var(--tag-ng); border-color: rgba(247,75,142,0.4); color: #f74fa0; }
+  .badge-perf { background: var(--tag-perf); border-color: rgba(247,147,79,0.4); color: #f7934f; }
+  .badge-auth { background: var(--tag-auth); border-color: rgba(147,79,247,0.4); color: #b07aff; }
+  .badge-bundle { background: var(--tag-bundle); border-color: rgba(79,220,247,0.4); color: #4feaf7; }
+
+  /* ── LAYOUT ── */
+  .container { max-width: 900px; margin: 0 auto; padding: 0 16px 80px; }
+
+  /* ── NAV TABS ── */
+  .nav-wrap {
+    position: sticky; top: 0; z-index: 100;
+    background: rgba(13,15,20,0.95);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--border);
+    padding: 0 16px;
+  }
+  .nav-tabs {
+    display: flex; gap: 0; overflow-x: auto;
+    max-width: 900px; margin: 0 auto;
+    scrollbar-width: none;
+  }
+  .nav-tabs::-webkit-scrollbar { display: none; }
+  .nav-tab {
+    flex-shrink: 0;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    padding: 14px 16px;
+    color: var(--muted);
+    cursor: pointer;
+    border-bottom: 2px solid transparent;
+    transition: all 0.2s;
+    white-space: nowrap;
+    background: none; border-top: none; border-left: none; border-right: none;
+  }
+  .nav-tab:hover { color: var(--text); }
+  .nav-tab.active { color: var(--accent); border-bottom-color: var(--accent); }
+
+  /* ── SECTION ── */
+  .section { margin-top: 48px; }
+  .section-header {
+    display: flex; align-items: center; gap: 12px;
+    margin-bottom: 24px;
+    padding-bottom: 16px;
+    border-bottom: 1px solid var(--border);
+  }
+  .section-icon {
+    width: 36px; height: 36px;
+    border-radius: 8px;
+    display: grid; place-items: center;
+    font-size: 18px;
+    flex-shrink: 0;
+  }
+  .section-title {
+    font-family: 'Syne', sans-serif;
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: var(--text);
+  }
+  .section-count {
+    margin-left: auto;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    color: var(--muted);
+    background: var(--surface2);
+    padding: 3px 10px;
+    border-radius: 20px;
+    flex-shrink: 0;
+  }
+
+  /* ── Q&A CARD ── */
+  .qa-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    margin-bottom: 12px;
+    overflow: hidden;
+    transition: border-color 0.2s;
+  }
+  .qa-card:hover { border-color: rgba(79,142,247,0.3); }
+  .qa-card.open { border-color: rgba(79,142,247,0.5); }
+
+  .qa-question {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    padding: 16px 18px;
+    cursor: pointer;
+    user-select: none;
+  }
+  .qa-num {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    color: var(--muted);
+    min-width: 28px;
+    padding-top: 2px;
+  }
+  .qa-q-text {
+    flex: 1;
+    font-weight: 500;
+    font-size: 14px;
+    color: var(--text);
+    line-height: 1.5;
+  }
+  .qa-arrow {
+    color: var(--muted);
+    font-size: 12px;
+    transition: transform 0.25s;
+    padding-top: 3px;
+    flex-shrink: 0;
+  }
+  .qa-card.open .qa-arrow { transform: rotate(180deg); color: var(--accent); }
+
+  .qa-answer {
+    display: none;
+    padding: 0 18px 18px 58px;
+  }
+  .qa-card.open .qa-answer { display: block; }
+
+  .qa-answer p { color: #c5cce0; font-size: 14px; margin-bottom: 12px; line-height: 1.75; }
+  .qa-answer p:last-child { margin-bottom: 0; }
+
+  .qa-answer ul, .qa-answer ol {
+    color: #c5cce0;
+    font-size: 14px;
+    padding-left: 20px;
+    margin-bottom: 12px;
+  }
+  .qa-answer li { margin-bottom: 6px; line-height: 1.65; }
+
+  .qa-answer code {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px;
+    background: var(--code-bg);
+    border: 1px solid var(--border);
+    padding: 2px 7px;
+    border-radius: 4px;
+    color: #a8d8ff;
+  }
+
+  .qa-answer pre {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px;
+    background: var(--code-bg);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 16px;
+    overflow-x: auto;
+    margin: 12px 0;
+    color: #a8d8ff;
+    line-height: 1.6;
+  }
+
+  .tip {
+    background: rgba(79,247,160,0.06);
+    border: 1px solid rgba(79,247,160,0.2);
+    border-left: 3px solid var(--accent3);
+    border-radius: 6px;
+    padding: 10px 14px;
+    font-size: 13px;
+    color: #9fffd4;
+    margin-top: 12px;
+  }
+  .tip strong { color: var(--accent3); }
+
+  .warn {
+    background: rgba(247,147,79,0.06);
+    border: 1px solid rgba(247,147,79,0.2);
+    border-left: 3px solid var(--accent2);
+    border-radius: 6px;
+    padding: 10px 14px;
+    font-size: 13px;
+    color: #ffc099;
+    margin-top: 12px;
+  }
+
+  /* table */
+  .qa-answer table { width: 100%; border-collapse: collapse; font-size: 13px; margin: 12px 0; }
+  .qa-answer th { background: var(--surface2); color: var(--accent); font-family: 'JetBrains Mono', monospace; font-size: 11px; padding: 8px 12px; text-align: left; border: 1px solid var(--border); }
+  .qa-answer td { padding: 8px 12px; border: 1px solid var(--border); color: #c5cce0; vertical-align: top; }
+  .qa-answer tr:nth-child(even) td { background: rgba(255,255,255,0.02); }
+
+  strong { color: #e8ecf8; }
+  em { color: var(--accent2); font-style: normal; font-weight: 500; }
+
+  /* ── BACK TO TOP ── */
+  .back-top {
+    position: fixed; bottom: 24px; right: 20px;
+    background: var(--accent); color: #fff;
+    border: none; border-radius: 50%;
+    width: 40px; height: 40px;
+    font-size: 18px; cursor: pointer;
+    box-shadow: 0 4px 20px rgba(79,142,247,0.4);
+    display: grid; place-items: center;
+    transition: transform 0.2s;
+    z-index: 200;
+  }
+  .back-top:hover { transform: translateY(-3px); }
+
+  @media (max-width: 600px) {
+    .qa-answer { padding-left: 18px; }
+    .qa-num { display: none; }
+  }
+</style>
+</head>
+<body>
+
+<div class="hero">
+  <h1>Frontend Interview Q&amp;A</h1>
+  <p>Câu hỏi &amp; trả lời đầy đủ cho level 3–4 năm kinh nghiệm</p>
+  <div class="badges">
+    <span class="badge badge-js">JavaScript</span>
+    <span class="badge badge-react">React</span>
+    <span class="badge badge-ng">Angular</span>
+    <span class="badge badge-auth">Auth</span>
+    <span class="badge badge-perf">Performance</span>
+    <span class="badge badge-bundle">Bundling</span>
+  </div>
+</div>
+
+<div class="nav-wrap">
+  <div class="nav-tabs">
+    <button class="nav-tab active" onclick="scrollTo('js')">JS Core</button>
+    <button class="nav-tab" onclick="scrollTo('css')">CSS/HTML</button>
+    <button class="nav-tab" onclick="scrollTo('react')">React</button>
+    <button class="nav-tab" onclick="scrollTo('angular')">Angular</button>
+    <button class="nav-tab" onclick="scrollTo('auth')">Auth</button>
+    <button class="nav-tab" onclick="scrollTo('perf')">Performance</button>
+    <button class="nav-tab" onclick="scrollTo('bundle')">Bundling</button>
+  </div>
+</div>
+
+<div class="container">
+
+<!-- ════════════════════════════════════════ JS CORE ════════════════════════════════════════ -->
+<div class="section" id="js">
+  <div class="section-header">
+    <div class="section-icon" style="background:var(--tag-js);">⚡</div>
+    <span class="section-title">JavaScript Core</span>
+    <span class="section-count">16 câu</span>
+  </div>
+
+  <div class="qa-card" onclick="toggle(this)">
+    <div class="qa-question">
+      <span class="qa-num">01</span>
+      <span class="qa-q-text">Sự khác nhau giữa <code>null</code>, <code>undefined</code>, và <code>undeclared</code>?</span>
+      <span class="qa-arrow">▼</span>
+    </div>
+    <div class="qa-answer">
+      <ul>
+        <li><strong>undefined</strong>: biến đã được khai báo nhưng chưa gán giá trị. JS engine tự gán.</li>
+        <li><strong>null</strong>: giá trị rỗng được lập trình viên <em>chủ động</em> gán — thể hiện "không có giá trị".</li>
+        <li><strong>undeclared</strong>: biến chưa được khai báo. Truy cập sẽ throw <code>ReferenceError</code>.</li>
+      </ul>
+      <pre>let a;          // undefined
+let b = null;   // null
+console.log(c); // ReferenceError: c is not defined
+
+typeof undefined === 'undefined' // true
+typeof null === 'object'         // true (bug lịch sử của JS!)
+null == undefined  // true (loose)
+null === undefined // false (strict)</pre>
+      <div class="tip"><strong>Tip thực tế:</strong> Dùng <code>null</code> khi muốn reset một biến có chủ đích. Dùng <code>undefined</code> để check "có truyền argument không": <code>if (arg === undefined)</code>.</div>
+    </div>
+  </div>
+
+  <div class="qa-card" onclick="toggle(this)">
+    <div class="qa-question">
+      <span class="qa-num">02</span>
+      <span class="qa-q-text">Event loop hoạt động như thế nào? Call stack, microtask queue, macrotask queue?</span>
+      <span class="qa-arrow">▼</span>
+    </div>
+    <div class="qa-answer">
+      <p>JS là single-threaded. Event loop liên tục kiểm tra call stack và queue để quyết định thực thi gì tiếp theo.</p>
+      <ul>
+        <li><strong>Call stack</strong>: nơi code đồng bộ chạy. LIFO.</li>
+        <li><strong>Microtask queue</strong>: Promise callbacks (<code>.then</code>, <code>.catch</code>), <code>queueMicrotask</code>, <code>MutationObserver</code>. <em>Ưu tiên cao hơn macrotask</em>, chạy hết trước khi render.</li>
+        <li><strong>Macrotask queue</strong>: <code>setTimeout</code>, <code>setInterval</code>, I/O, UI events. Mỗi lần event loop chỉ lấy <em>một</em> macrotask.</li>
+      </ul>
+      <p><strong>Thứ tự:</strong> Synchronous → Microtasks (hết) → Render → Macrotask → Microtasks → ...</p>
+      <pre>console.log('1');
+setTimeout(() => console.log('2'), 0);
+Promise.resolve().then(() => console.log('3'));
+console.log('4');
+// Output: 1 → 4 → 3 → 2</pre>
+      <div class="tip"><strong>Thực tế:</strong> Quá nhiều microtask liên tiếp (VD: Promise chain dài) có thể block rendering → UI freeze.</div>
+    </div>
+  </div>
+
+  <div class="qa-card" onclick="toggle(this)">
+    <div class="qa-question">
+      <span class="qa-num">03</span>
+      <span class="qa-q-text">Closure là gì? Cho ví dụ thực tế</span>
+      <span class="qa-arrow">▼</span>
+    </div>
+    <div class="qa-answer">
+      <p>Closure là khi một function "nhớ" lexical scope của nơi nó được tạo ra, ngay cả khi function đó chạy bên ngoài scope đó.</p>
+      <pre>// VD thực tế: counter
+function createCounter() {
+  let count = 0; // biến này được "đóng gói"
+  return {
+    increment: () => ++count,
+    get: () => count
+  };
+}
+const c = createCounter();
+c.increment(); c.increment();
+console.log(c.get()); // 2
+
+// VD thực tế 2: memoize đơn giản
+function memoize(fn) {
+  const cache = {};
+  return (key) => cache[key] ?? (cache[key] = fn(key));
+}</pre>
+      <div class="warn">Lỗi phổ biến: closure trong vòng lặp dùng <code>var</code> — mọi callback đều share cùng biến. Fix bằng <code>let</code> hoặc IIFE.</div>
+    </div>
+  </div>
+
+  <div class="qa-card" onclick="toggle(this)">
+    <div class="qa-question">
+      <span class="qa-num">04</span>
+      <span class="qa-q-text">Prototype chain hoạt động như thế nào?</span>
+      <span class="qa-arrow">▼</span>
+    </div>
+    <div class="qa-answer">
+      <p>Mỗi object trong JS có một internal link <code>[[Prototype]]</code> tới object cha. Khi truy cập property, JS tìm theo chain này cho đến khi gặp <code>null</code>.</p>
+      <pre>const animal = { breathes: true };
+const dog = Object.create(animal);
+dog.barks = true;
+
+console.log(dog.breathes); // true (kế thừa từ animal)
+console.log(dog.hasOwnProperty('breathes')); // false
+
+// Class syntax là syntactic sugar của prototype
+class Animal { breathe() {} }
+class Dog extends Animal { bark() {} }
+// Dog.prototype.__proto__ === Animal.prototype</pre>
+      <div class="tip"><strong>Phân biệt:</strong> <code>hasOwnProperty</code> chỉ check property của chính object, không check chain.</div>
+    </div>
+  </div>
+
+  <div class="qa-card" onclick="toggle(this)">
+    <div class="qa-question">
+      <span class="qa-num">05</span>
+      <span class="qa-q-text"><code>this</code> keyword hoạt động ra sao trong các context khác nhau?</span>
+      <span class="qa-arrow">▼</span>
+    </div>
+    <div class="qa-answer">
+      <table>
+        <tr><th>Context</th><th>this trỏ đến</th></tr>
+        <tr><td>Global scope</td><td><code>window</code> (browser) / <code>global</code> (Node)</td></tr>
+        <tr><td>Regular function</td><td>Phụ thuộc vào caller. Strict mode → <code>undefined</code></td></tr>
+        <tr><td>Arrow function</td><td>Lexical — kế thừa từ scope bao ngoài</td></tr>
+        <tr><td>Method call</td><td>Object chứa method</td></tr>
+        <tr><td>new keyword</td><td>Instance mới được tạo</td></tr>
+        <tr><td>call/apply/bind</td><td>Explicit binding — do bạn chỉ định</td></tr>
+      </table>
+      <pre>const obj = {
+  name: 'Vue',
+  regular: function() { console.log(this.name); }, // 'Vue'
+  arrow: () => { console.log(this.name); }          // undefined (lexical)
+};
+// React: luôn dùng arrow function cho event handler để tránh mất context</pre>
+    </div>
+  </div>
+
+  <div class="qa-card" onclick="toggle(this)">
+    <div class="qa-question">
+      <span class="qa-num">06</span>
+      <span class="qa-q-text">Promise.all vs Promise.allSettled vs Promise.race vs Promise.any?</span>
+      <span class="qa-arrow">▼</span>
+    </div>
+    <div class="qa-answer">
+      <table>
+        <tr><th>Method</th><th>Resolve khi</th><th>Reject khi</th><th>Use case</th></tr>
+        <tr><td><code>Promise.all</code></td><td>Tất cả resolve</td><td>Có 1 reject</td><td>Fetch nhiều API song song, tất cả đều cần thành công</td></tr>
+        <tr><td><code>Promise.allSettled</code></td><td>Tất cả settled (kể cả reject)</td><td>Không bao giờ reject</td><td>Muốn biết kết quả tất cả, không bị fail nhanh</td></tr>
+        <tr><td><code>Promise.race</code></td><td>Promise đầu tiên settle</td><td>Promise đầu tiên reject</td><td>Timeout pattern</td></tr>
+        <tr><td><code>Promise.any</code></td><td>Có 1 resolve</td><td>Tất cả reject</td><td>Thử nhiều nguồn, lấy cái nào nhanh nhất</td></tr>
+      </table>
+      <pre>// Timeout pattern với Promise.race
+const timeout = (ms) => new Promise((_, reject) =>
+  setTimeout(() => reject(new Error('Timeout')), ms)
+);
+await Promise.race([fetchData(), timeout(5000)]);</pre>
+    </div>
+  </div>
+
+  <div class="qa-card" onclick="toggle(this)">
+    <div class="qa-question">
+      <span class="qa-num">07</span>
+      <span class="qa-q-text">Debounce vs Throttle — khác nhau thế nào, use case?</span>
+      <span class="qa-arrow">▼</span>
+    </div>
+    <div class="qa-answer">
+      <ul>
+        <li><strong>Debounce</strong>: Chỉ gọi function sau khi ngừng trigger một khoảng thời gian. Bắt đầu đếm lại mỗi lần trigger.</li>
+        <li><strong>Throttle</strong>: Gọi function tối đa 1 lần trong mỗi khoảng thời gian, bất kể trigger bao nhiêu lần.</li>
+      </ul>
+      <pre>// Debounce: search input (chờ user ngừng gõ mới call API)
+const search = debounce((query) => fetchResults(query), 300);
+
+// Throttle: scroll handler, resize handler, game loop
+const onScroll = throttle(() => updatePosition(), 100);</pre>
+      <table>
+        <tr><th>Debounce</th><th>Throttle</th></tr>
+        <tr><td>Search/autocomplete</td><td>Scroll/resize handler</td></tr>
+        <tr><td>Form validation</td><td>Mouse move tracking</td></tr>
+        <tr><td>Window resize save</td><td>Rate limiting API calls</td></tr>
+      </table>
+    </div>
+  </div>
+
+  <div class="qa-card" onclick="toggle(this)">
+    <div class="qa-question">
+      <span class="qa-num">08</span>
+      <span class="qa-q-text">var, let, const — hoisting hoạt động như thế nào với từng loại?</span>
+      <span class="qa-arrow">▼</span>
+    </div>
+    <div class="qa-answer">
+      <p>Tất cả đều được hoist, nhưng cách xử lý khác nhau:</p>
+      <ul>
+        <li><strong>var</strong>: Hoist và khởi tạo = <code>undefined</code>. Có thể dùng trước khi khai báo (trả về <code>undefined</code>).</li>
+        <li><strong>let/const</strong>: Hoist nhưng <em>không</em> khởi tạo. Tồn tại trong <strong>Temporal Dead Zone (TDZ)</strong> từ đầu block đến dòng khai báo → <code>ReferenceError</code> nếu truy cập sớm.</li>
+        <li><strong>const</strong>: Phải gán giá trị khi khai báo. Không thể reassign (nhưng object/array bên trong vẫn mutable).</li>
+      </ul>
+      <pre>console.log(x); // undefined (var hoisted)
+var x = 5;
+
+console.log(y); // ReferenceError: TDZ
+let y = 5;</pre>
+    </div>
+  </div>
+
+  <div class="qa-card" onclick="toggle(this)">
+    <div class="qa-question">
+      <span class="qa-num">09</span>
+      <span class="qa-q-text">CORS là gì và cách xử lý trong dự án thực tế?</span>
+      <span class="qa-arrow">▼</span>
+    </div>
+    <div class="qa-answer">
+      <p><strong>CORS (Cross-Origin Resource Sharing)</strong>: Cơ chế bảo mật của browser, chặn request từ origin này đến origin khác trừ khi server cho phép.</p>
+      <p><strong>Origin</strong> = scheme + domain + port. VD: <code>https://app.com:443</code> khác <code>http://app.com:80</code>.</p>
+      <p><strong>Cách xử lý:</strong></p>
+      <ul>
+        <li><strong>Server-side</strong> (đúng đắn nhất): Backend thêm header <code>Access-Control-Allow-Origin</code>.</li>
+        <li><strong>Dev proxy</strong>: Vite/Webpack DevServer proxy <code>/api</code> → backend để tránh CORS khi dev.</li>
+        <li><strong>JSONP</strong>: Legacy, chỉ GET, không khuyến khích.</li>
+      </ul>
+      <pre>// vite.config.ts — dev proxy
+server: {
+  proxy: {
+    '/api': {
+      target: 'http://localhost:3000',
+      changeOrigin: true
+    }
+  }
+}</pre>
+      <div class="warn">Preflight request (OPTIONS) xảy ra với non-simple requests (PUT/DELETE, custom headers, JSON). Server phải xử lý OPTIONS.</div>
+    </div>
+  </div>
+
+  <div class="qa-card" onclick="toggle(this)">
+    <div class="qa-question">
+      <span class="qa-num">10</span>
+      <span class="qa-q-text">Giải thích <code>call</code>, <code>apply</code>, <code>bind</code></span>
+      <span class="qa-arrow">▼</span>
+    </div>
+    <div class="qa-answer">
+      <p>Ba cách để <em>explicit binding</em> — chỉ định <code>this</code> cho function.</p>
+      <pre>function greet(greeting, punct) {
+  return `${greeting}, ${this.name}${punct}`;
+}
+const user = { name: 'Nam' };
+
+greet.call(user, 'Hello', '!');    // gọi ngay, args riêng lẻ
+greet.apply(user, ['Hello', '!']); // gọi ngay, args dạng array
+const fn = greet.bind(user);       // trả về function mới, gọi sau
+fn('Hi', '.');                     // 'Hi, Nam.'
+
+// bind thực tế: React class component
+this.handleClick = this.handleClick.bind(this);</pre>
+    </div>
+  </div>
+
+  <div class="qa-card" onclick="toggle(this)">
+    <div class="qa-question">
+      <span class="qa-num">11</span>
+      <span class="qa-q-text">Immutability trong JS — tại sao quan trọng trong React/Angular?</span>
+      <span class="qa-arrow">▼</span>
+    </div>
+    <div class="qa-answer">
+      <p>Immutability = không thay đổi object/array gốc, mà tạo ra bản copy mới.</p>
+      <p><strong>Tại sao quan trọng:</strong> React và Angular OnPush so sánh reference (<code>===</code>) để biết có cần re-render không. Nếu mutate object gốc, reference không đổi → UI không update.</p>
+      <pre>// ❌ Sai — mutate trực tiếp
+state.items.push(newItem); // reference không đổi → React không re-render
+
+// ✅ Đúng — tạo array mới
+setItems([...items, newItem]);
+setState(prev => ({ ...prev, count: prev.count + 1 }));</pre>
+      <div class="tip">Libraries như Immer giúp viết code mutative nhưng bên dưới tạo immutable copy.</div>
+    </div>
+  </div>
+
+  <div class="qa-card" onclick="toggle(this)">
+    <div class="qa-question">
+      <span class="qa-num">12</span>
+      <span class="qa-q-text">Generator function và Iterator là gì?</span>
+      <span class="qa-arrow">▼</span>
+    </div>
+    <div class="qa-answer">
+      <p>Generator (<code>function*</code>) là function có thể <em>pause</em> và <em>resume</em> tại <code>yield</code>.</p>
+      <pre>function* range(start, end) {
+  for (let i = start; i <= end; i++) yield i;
+}
+const gen = range(1, 3);
+gen.next(); // { value: 1, done: false }
+gen.next(); // { value: 2, done: false }
+gen.next(); // { value: 3, done: false }
+gen.next(); // { value: undefined, done: true }
+
+// Use case thực tế: Redux Saga dùng Generator để handle async flow
+function* fetchUserSaga() {
+  const user = yield call(fetchUser, userId);
+  yield put(setUser(user));
+}</pre>
+    </div>
+  </div>
+
+  <div class="qa-card" onclick="toggle(this)">
+    <div class="qa-question">
+      <span class="qa-num">13</span>
+      <span class="qa-q-text">WeakMap và WeakRef dùng khi nào?</span>
+      <span class="qa-arrow">▼</span>
+    </div>
+    <div class="qa-answer">
+      <ul>
+        <li><strong>WeakMap</strong>: Map với key là object, nhưng không giữ strong reference → GC có thể collect key nếu không còn reference nào khác. Dùng để cache private data gắn với object mà không lo memory leak.</li>
+        <li><strong>WeakRef</strong>: Giữ weak reference đến object. GC có thể thu hồi bất cứ lúc nào.</li>
+      </ul>
+      <pre>// VD: cache DOM node data mà không gây memory leak
+const cache = new WeakMap();
+function processNode(el) {
+  if (!cache.has(el)) cache.set(el, computeExpensive(el));
+  return cache.get(el);
+}
+// Khi el bị remove khỏi DOM và không còn ref nào → tự clean</pre>
+    </div>
+  </div>
+
+  <div class="qa-card" onclick="toggle(this)">
+    <div class="qa-question">
+      <span class="qa-num">14</span>
+      <span class="qa-q-text">TypeScript: interface vs type, generic, utility types hay dùng?</span>
+      <span class="qa-arrow">▼</span>
+    </div>
+    <div class="qa-answer">
+      <p><strong>interface vs type:</strong> Cả hai tương đương trong hầu hết trường hợp. Dùng <code>interface</code> cho object shapes (có thể extend/merge). Dùng <code>type</code> cho union, intersection, primitives.</p>
+      <pre>// Utility types hay dùng
+type Partial&lt;T&gt;     // tất cả fields optional
+type Required&lt;T&gt;    // tất cả fields required
+type Pick&lt;T, K&gt;     // chỉ lấy 1 số keys
+type Omit&lt;T, K&gt;     // bỏ 1 số keys
+type Readonly&lt;T&gt;    // immutable
+type Record&lt;K, V&gt;  // object với key type K, value type V
+type ReturnType&lt;F&gt;  // lấy return type của function
+type Parameters&lt;F&gt; // lấy param types của function
+
+// Generic thực tế
+function useFetch&lt;T&gt;(url: string): { data: T | null; loading: boolean } {
+  // ...
+}</pre>
+    </div>
+  </div>
+
+  <div class="qa-card" onclick="toggle(this)">
+    <div class="qa-question">
+      <span class="qa-num">15</span>
+      <span class="qa-q-text">Optional chaining, nullish coalescing, logical assignment?</span>
+      <span class="qa-arrow">▼</span>
+    </div>
+    <div class="qa-answer">
+      <pre>// Optional chaining ?.
+const city = user?.address?.city; // không throw nếu address null/undefined
+
+// Nullish coalescing ?? (chỉ fallback khi null/undefined, khác || vì 0/"" được giữ)
+const count = data.count ?? 0; // 0 nếu null/undefined; giữ nguyên 0 nếu là 0
+
+// Logical assignment
+x ||= 'default'; // x = x || 'default'
+x &&= transform(x); // x = x && transform(x)
+x ??= 'default'; // x = x ?? 'default'</pre>
+      <div class="warn"><code>||</code> fallback với <em>mọi falsy value</em> (0, "", false). Dùng <code>??</code> khi 0 hoặc "" là giá trị hợp lệ.</div>
+    </div>
+  </div>
+
+  <div class="qa-card" onclick="toggle(this)">
+    <div class="qa-question">
+      <span class="qa-num">16</span>
+      <span class="qa-q-text">Sự khác nhau giữa shallow copy và deep copy?</span>
+      <span class="qa-arrow">▼</span>
+    </div>
+    <div class="qa-answer">
+      <pre>// Shallow copy — copy 1 level, nested object vẫn share reference
+const a = { x: 1, nested: { y: 2 } };
+const b = { ...a };
+b.nested.y = 99; // ảnh hưởng cả a!
+
+// Deep copy methods
+const c = structuredClone(a);   // native, ES2022, handles Date/Map/Set
+const d = JSON.parse(JSON.stringify(a)); // simple nhưng mất function/Date/undefined
+import _ from 'lodash'; _.cloneDeep(a); // đầy đủ nhất nhưng nặng</pre>
+      <div class="tip"><code>structuredClone</code> là cách tốt nhất hiện tại cho deep copy trong browser/Node modern.</div>
+    </div>
+  </div>
+
+</div>
+
+<!-- ════════════════════════════════════════ CSS ════════════════════════════════════════ -->
+<div class="section" id="css">
+  <div class="section-header">
+    <div class="section-icon" style="background:rgba(247,75,200,0.15);">🎨</div>
+    <span class="section-title">CSS / HTML</span>
+    <span class="section-count">6 câu</span>
+  </div>
+
+  <div class="qa-card" onclick="toggle(this)">
+    <div class="qa-question">
+      <span class="qa-num">17</span>
+      <span class="qa-q-text">CSS specificity tính như thế nào? <code>!important</code> nên dùng khi nào?</span>
+      <span class="qa-arrow">▼</span>
+    </div>
+    <div class="qa-answer">
+      <p>Specificity = (a, b, c, d) — so sánh từ trái sang:</p>
+      <table>
+        <tr><th>Loại selector</th><th>Điểm</th></tr>
+        <tr><td>Inline style</td><td>(1,0,0,0)</td></tr>
+        <tr><td>ID selector #id</td><td>(0,1,0,0)</td></tr>
+        <tr><td>Class .cls, attribute, pseudo-class :hover</td><td>(0,0,1,0)</td></tr>
+        <tr><td>Element div, pseudo-element ::before</td><td>(0,0,0,1)</td></tr>
+      </table>
+      <p><code>!important</code> override tất cả, chỉ dùng như last resort (VD: override third-party CSS). Trong codebase tự viết, nên tránh — thường là dấu hiệu của kiến trúc CSS có vấn đề.</p>
+    </div>
+  </div>
+
+  <div class="qa-card" onclick="toggle(this)">
+    <div class="qa-question">
+      <span class="qa-num">18</span>
+      <span class="qa-q-text">Flexbox vs Grid — khi nào chọn cái nào?</span>
+      <span class="qa-arrow">▼</span>
+    </div>
+    <div class="qa-answer">
+      <table>
+        <tr><th></th><th>Flexbox</th><th>Grid</th></tr>
+        <tr><td>Dimension</td><td>1D (row hoặc column)</td><td>2D (row VÀ column)</td></tr>
+        <tr><td>Content-driven vs Layout-driven</td><td>Content quyết định size</td><td>Layout quyết định trước</td></tr>
+        <tr><td>Use case</td><td>Navbar, button group, card row</td><td>Page layout, gallery, dashboard</td></tr>
+      </table>
+      <div class="tip">Thực tế hay kết hợp: Grid cho page layout tổng thể, Flexbox cho components bên trong.</div>
+    </div>
+  </div>
+
+  <div class="qa-card" onclick="toggle(this)">
+    <div class="qa-question">
+      <span class="qa-num">19</span>
+      <span class="qa-q-text">CSS-in-JS vs CSS Modules vs BEM — trade-off?</span>
+      <span class="qa-arrow">▼</span>
+    </div>
+    <div class="qa-answer">
+      <table>
+        <tr><th>Approach</th><th>Pros</th><th>Cons</th></tr>
+        <tr><td>BEM</td><td>Không cần tooling, dễ hiểu</td><td>Verbose, dễ bị naming conflict</td></tr>
+        <tr><td>CSS Modules</td><td>Scoped, zero runtime, tốt cho SSR</td><td>Khó dynamic styles</td></tr>
+        <tr><td>CSS-in-JS (styled-components)</td><td>Dynamic styles dễ, co-location</td><td>Runtime overhead, larger bundle</td></tr>
+        <tr><td>Tailwind</td><td>Nhanh, consistent design system</td><td>Verbose HTML, learning curve</td></tr>
+      </table>
+    </div>
+  </div>
+
+  <div class="qa-card" onclick="toggle(this)">
+    <div class="qa-question">
+      <span class="qa-num">20</span>
+      <span class="qa-q-text">Stacking context và z-index hoạt động như thế nào?</span>
+      <span class="qa-arrow">▼</span>
+    </div>
+    <div class="qa-answer">
+      <p>Z-index chỉ có nghĩa trong cùng <strong>stacking context</strong>. Mỗi context là "thế giới z-index riêng".</p>
+      <p><strong>Stacking context mới được tạo khi:</strong> position + z-index khác auto, opacity < 1, transform, filter, isolation: isolate, will-change...</p>
+      <pre>/* Lỗi phổ biến: modal có z-index: 9999 nhưng vẫn bị che
+   vì parent có transform: translateZ(0) → tạo stacking context mới */
+.parent { transform: translateZ(0); } /* stacking context! */
+.modal { z-index: 9999; }             /* chỉ so sánh trong parent */</pre>
+      <div class="tip">Fix: Move modal ra <code>document.body</code> (React Portal, Angular CDK Overlay).</div>
+    </div>
+  </div>
+
+  <div class="qa-card" onclick="toggle(this)">
+    <div class="qa-question">
+      <span class="qa-num">21</span>
+      <span class="qa-q-text">Critical rendering path là gì, optimize như thế nào?</span>
+      <span class="qa-arrow">▼</span>
+    </div>
+    <div class="qa-answer">
+      <p>Quá trình browser biến HTML/CSS/JS thành pixels: <strong>HTML → DOM → CSSOM → Render Tree → Layout → Paint → Composite</strong></p>
+      <p><strong>Optimize:</strong></p>
+      <ul>
+        <li>Minify HTML/CSS/JS</li>
+        <li><code>&lt;link rel="preload"&gt;</code> cho critical assets</li>
+        <li>Inline critical CSS, defer non-critical CSS</li>
+        <li>Script tag: <code>defer</code> hoặc <code>async</code>, đặt trước <code>&lt;/body&gt;</code></li>
+        <li>Giảm render-blocking resources</li>
+        <li>Tránh layout thrashing (đọc/ghi DOM xen kẽ)</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="qa-card" onclick="toggle(this)">
+    <div class="qa-question">
+      <span class="qa-num">22</span>
+      <span class="qa-q-text">rem, em, vh/vw — khi nào dùng gì?</span>
+      <span class="qa-arrow">▼</span>
+    </div>
+    <div class="qa-answer">
+      <table>
+        <tr><th>Unit</th><th>Relative to</th><th>Use case</th></tr>
+        <tr><td><code>rem</code></td><td>Root font-size (16px)</td><td>Spacing, font-size — nhất quán toàn app</td></tr>
+        <tr><td><code>em</code></td><td>Parent font-size</td><td>Component-level scaling (button padding)</td></tr>
+        <tr><td><code>vh/vw</code></td><td>Viewport</td><td>Full-screen sections, hero banners</td></tr>
+        <tr><td><code>%</code></td><td>Parent element</td><td>Fluid layouts, responsive widths</td></tr>
+        <tr><td><code>px</code></td><td>Absolute</td><td>Borders, shadows — không cần scale</td></tr>
+      </table>
+      <div class="tip">Best practice: dùng <code>rem</code> cho font và spacing, <code>px</code> cho borders/shadows.</div>
+    </div>
+  </div>
+</div>
+
+<!-- ════════════════════════════════════════ REACT ════════════════════════════════════════ -->
+<div class="section" id="react">
+  <div class="section-header">
+    <div class="section-icon" style="background:var(--tag-react);">⚛️</div>
+    <span class="section-title">ReactJS</span>
+    <span class="section-count">10 câu</span>
+  </div>
+
+  <div class="qa-card" onclick="toggle(this)">
+    <div class="qa-question">
+      <span class="qa-num">23</span>
+      <span class="qa-q-text">Virtual DOM hoạt động như thế nào? Reconciliation là gì?</span>
+      <span class="qa-arrow">▼</span>
+    </div>
+    <div class="qa-answer">
+      <p><strong>Virtual DOM</strong>: Biểu diễn JS của DOM thật. React giữ 2 cây VDOM (current + work-in-progress).</p>
+      <p><strong>Reconciliation</strong>: Khi state/props thay đổi, React diff 2 cây VDOM, tìm minimal changes, rồi batch update DOM thật.</p>
+      <p><strong>Fiber Architecture</strong> (React 16+): Chia work thành units nhỏ, có thể pause/resume/abort → không block main thread → UI mượt hơn.</p>
+      <p><strong>Heuristics của diff algorithm:</strong></p>
+      <ul>
+        <li>Element khác type → unmount toàn bộ subtree, mount mới</li>
+        <li>Cùng type → update props, recurse vào children</li>
+        <li>List → dùng <code>key</code> để match elements</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="qa-card" onclick="toggle(this)">
+    <div class="qa-question">
+      <span class="qa-num">24</span>
+      <span class="qa-q-text">useMemo, useCallback, React.memo — khi nào thực sự cần?</span>
+      <span class="qa-arrow">▼</span>
+    </div>
+    <div class="qa-answer">
+      <table>
+        <tr><th>Hook/API</th><th>Memoize cái gì</th><th>Cần khi</th></tr>
+        <tr><td><code>useMemo</code></td><td>Giá trị computed</td><td>Tính toán nặng, tránh re-compute mỗi render</td></tr>
+        <tr><td><code>useCallback</code></td><td>Function reference</td><td>Function truyền vào child wrapped trong React.memo</td></tr>
+        <tr><td><code>React.memo</code></td><td>Component render</td><td>Component pure, re-render do parent thay đổi props không liên quan</td></tr>
+      </table>
+      <div class="warn"><strong>Đừng over-optimize!</strong> useMemo/useCallback bản thân tốn overhead. Chỉ dùng khi profiler xác nhận có vấn đề, hoặc khi dependency của useEffect cần stable reference.</div>
+      <pre>// useCallback cần thiết khi:
+const handleClick = useCallback(() => {
+  doSomething(id);
+}, [id]); // stable reference → MemoChild không re-render vô lý
+return &lt;MemoChild onClick={handleClick} /&gt;;</pre>
+    </div>
+  </div>
+
+  <div class="qa-card" onclick="toggle(this)">
+    <div class="qa-question">
+      <span class="qa-num">25</span>
+      <span class="qa-q-text">useEffect dependency array — các lỗi phổ biến khi dùng sai?</span>
+      <span class="qa-arrow">▼</span>
+    </div>
+    <div class="qa-answer">
+      <ul>
+        <li><strong>Missing dependencies</strong>: Stale closure — effect dùng giá trị cũ vì không khai báo dep.</li>
+        <li><strong>Object/array trong deps</strong>: Mỗi render tạo reference mới → infinite loop.</li>
+        <li><strong>Không cleanup</strong>: Memory leak với subscription, timeout, event listener.</li>
+        <li><strong>Async function trực tiếp</strong>: useEffect callback không nên là async.</li>
+      </ul>
+      <pre>// ❌ Infinite loop
+useEffect(() => { fetchUser(options); }, [options]); // options = {} mỗi render
+
+// ✅ Fix: memoize options hoặc dùng stable primitive deps
+const stableOptions = useMemo(() => options, [options.id]);
+
+// ✅ Cleanup
+useEffect(() => {
+  const sub = stream.subscribe(handler);
+  return () => sub.unsubscribe(); // cleanup!
+}, []);
+
+// ✅ Async trong useEffect
+useEffect(() => {
+  (async () => {
+    const data = await fetchData();
+    setData(data);
+  })();
+}, []);</pre>
+    </div>
+  </div>
+
+  <div class="qa-card" onclick="toggle(this)">
+    <div class="qa-question">
+      <span class="qa-num">26</span>
+      <span class="qa-q-text">Context API vs Redux vs Zustand vs React Query — khi nào dùng cái nào?</span>
+      <span class="qa-arrow">▼</span>
+    </div>
+    <div class="qa-answer">
+      <table>
+        <tr><th>Solution</th><th>Dùng khi</th></tr>
+        <tr><td>Local state (useState)</td><td>State chỉ dùng trong 1 component</td></tr>
+        <tr><td>Lifted state</td><td>2-3 component anh em cần share</td></tr>
+        <tr><td>Context API</td><td>Theme, locale, user auth — ít update, nhiều consumer</td></tr>
+        <tr><td>Redux Toolkit</td><td>App lớn, complex state logic, cần time-travel debug</td></tr>
+        <tr><td>Zustand/Jotai</td><td>Global state đơn giản, ít boilerplate</td></tr>
+        <tr><td>React Query/SWR</td><td>Server state — cache, refetch, loading/error handling</td></tr>
+      </table>
+      <div class="tip">2024+: Dùng <strong>React Query</strong> cho server state + <strong>Zustand</strong> cho client state → giảm 70% Redux boilerplate.</div>
+    </div>
+  </div>
+
+  <div class="qa-card" onclick="toggle(this)">
+    <div class="qa-question">
+      <span class="qa-num">27</span>
+      <span class="qa-q-text">useRef dùng để làm gì ngoài việc truy cập DOM?</span>
+      <span class="qa-arrow">▼</span>
+    </div>
+    <div class="qa-answer">
+      <pre>// 1. Truy cập DOM element
+const inputRef = useRef(null);
+inputRef.current.focus();
+
+// 2. Lưu giá trị không trigger re-render (instance variable)
+const intervalId = useRef(null);
+intervalId.current = setInterval(tick, 1000);
+
+// 3. Giữ giá trị trước của prop/state
+function usePrevious(value) {
+  const ref = useRef();
+  useEffect(() => { ref.current = value; });
+  return ref.current;
+}
+
+// 4. Stable callback reference (useEffectEvent pattern)
+const latestCallback = useRef(callback);
+useEffect(() => { latestCallback.current = callback; });</pre>
+      <div class="tip">Key insight: <code>useRef</code> = mutable container với stable identity across renders. Thay đổi <code>.current</code> không trigger re-render.</div>
+    </div>
+  </div>
+
+  <div class="qa-card" onclick="toggle(this)">
+    <div class="qa-question">
+      <span class="qa-num">28</span>
+      <span class="qa-q-text">Controlled vs Uncontrolled components?</span>
+      <span class="qa-arrow">▼</span>
+    </div>
+    <div class="qa-answer">
+      <table>
+        <tr><th></th><th>Controlled</th><th>Uncontrolled</th></tr>
+        <tr><td>State quản lý bởi</td><td>React state</td><td>DOM (via ref)</td></tr>
+        <tr><td>Single source of truth</td><td>✅</td><td>❌</td></tr>
+        <tr><td>Validation real-time</td><td>Dễ</td><td>Khó</td></tr>
+        <tr><td>Use case</td><td>Form phức tạp, validation</td><td>File input, simple forms</td></tr>
+      </table>
+      <pre>// Controlled
+const [val, setVal] = useState('');
+&lt;input value={val} onChange={e =&gt; setVal(e.target.value)} /&gt;
+
+// Uncontrolled
+const ref = useRef();
+&lt;input defaultValue="initial" ref={ref} /&gt;
+// Đọc khi submit: ref.current.value</pre>
+      <div class="tip">React Hook Form dùng uncontrolled + ref để tối ưu performance (ít re-render hơn).</div>
+    </div>
+  </div>
+
+  <div class="qa-card" onclick="toggle(this)">
+    <div class="qa-question">
+      <span class="qa-num">29</span>
+      <span class="qa-q-text">React 18: useTransition, useDeferredValue dùng khi nào?</span>
+      <span class="qa-arrow">▼</span>
+    </div>
+    <div class="qa-answer">
+      <p>Cả hai đều mark updates là <strong>non-urgent</strong> (low priority), cho phép React ưu tiên urgent updates (user input) trước.</p>
+      <pre>// useTransition — wrap state update
+const [isPending, startTransition] = useTransition();
+const handleSearch = (e) => {
+  setQuery(e.target.value); // urgent: update input ngay
+  startTransition(() => {
+    setResults(filterData(e.target.value)); // deferrable: heavy render
+  });
+};
+
+// useDeferredValue — defer một giá trị đã có
+const deferredQuery = useDeferredValue(query);
+// deferredQuery "lag" sau query → component dùng nó render sau</pre>
+      <div class="tip"><code>useTransition</code> khi bạn kiểm soát state update. <code>useDeferredValue</code> khi nhận value từ props/context mà không kiểm soát được nguồn.</div>
+    </div>
+  </div>
+
+  <div class="qa-card" onclick="toggle(this)">
+    <div class="qa-question">
+      <span class="qa-num">30</span>
+      <span class="qa-q-text">Tại sao không dùng index làm key trong list?</span>
+      <span class="qa-arrow">▼</span>
+    </div>
+    <div class="qa-answer">
+      <p>Key giúp React identify element qua renders. Dùng index là key gây lỗi khi list bị reorder/filter/insert:</p>
+      <pre>// Items: [A, B, C] → key: [0, 1, 2]
+// Remove A → [B, C] → key vẫn [0, 1]
+// React nghĩ key=0 vẫn là cùng element → không unmount đúng
+// → Bug với state, animation, focus
+
+// ✅ Dùng stable unique ID
+items.map(item =&gt; &lt;Item key={item.id} ... /&gt;)
+
+// ✅ Dùng index CHỈ KHI list static, không reorder, không có state phức tạp</pre>
+    </div>
+  </div>
+
+  <div class="qa-card" onclick="toggle(this)">
+    <div class="qa-question">
+      <span class="qa-num">31</span>
+      <span class="qa-q-text">Custom hooks — bạn đã tự viết hook nào giải quyết vấn đề gì?</span>
+      <span class="qa-arrow">▼</span>
+    </div>
+    <div class="qa-answer">
+      <pre>// useLocalStorage — sync state với localStorage
+function useLocalStorage(key, initialValue) {
+  const [value, setValue] = useState(() =&gt; {
+    try { return JSON.parse(localStorage.getItem(key)) ?? initialValue; }
+    catch { return initialValue; }
+  });
+  const setStoredValue = useCallback((newVal) =&gt; {
+    setValue(newVal);
+    localStorage.setItem(key, JSON.stringify(newVal));
+  }, [key]);
+  return [value, setStoredValue];
+}
+
+// useIntersectionObserver — lazy load, infinite scroll
+function useIntersectionObserver(ref, options) {
+  const [isVisible, setIsVisible] = useState(false);
+  useEffect(() =&gt; {
+    const obs = new IntersectionObserver(([entry]) =&gt; {
+      setIsVisible(entry.isIntersecting);
+    }, options);
+    if (ref.current) obs.observe(ref.current);
+    return () =&gt; obs.disconnect();
+  }, [ref, options]);
+  return isVisible;
+}</pre>
+    </div>
+  </div>
+
+  <div class="qa-card" onclick="toggle(this)">
+    <div class="qa-question">
+      <span class="qa-num">32</span>
+      <span class="qa-q-text">React Suspense và Error Boundary hoạt động như thế nào?</span>
+      <span class="qa-arrow">▼</span>
+    </div>
+    <div class="qa-answer">
+      <pre>// Suspense — hiển thị fallback trong khi lazy component load
+const LazyPage = React.lazy(() =&gt; import('./Page'));
+&lt;Suspense fallback={&lt;Skeleton /&gt;}&gt;
+  &lt;LazyPage /&gt;
+&lt;/Suspense&gt;
+
+// React 18: Suspense cũng wrap data fetching (React Query integration)
+
+// Error Boundary — class component catch JS error trong subtree
+class ErrorBoundary extends React.Component {
+  state = { hasError: false };
+  static getDerivedStateFromError() { return { hasError: true }; }
+  componentDidCatch(error, info) { logToSentry(error, info); }
+  render() {
+    return this.state.hasError
+      ? &lt;ErrorUI /&gt;
+      : this.props.children;
+  }
+}
+// Hoặc dùng thư viện: react-error-boundary</pre>
+    </div>
+  </div>
+</div>
+
+<!-- ════════════════════════════════════════ ANGULAR ════════════════════════════════════════ -->
+<div class="section" id="angular">
+  <div class="section-header">
+    <div class="section-icon" style="background:var(--tag-ng);">🅰️</div>
+    <span class="section-title">Angular</span>
+    <span class="section-count">8 câu</span>
+  </div>
+
+  <div class="qa-card" onclick="toggle(this)">
+    <div class="qa-question">
+      <span class="qa-num">33</span>
+      <span class="qa-q-text">Change detection Default vs OnPush — khác nhau thế nào?</span>
+      <span class="qa-arrow">▼</span>
+    </div>
+    <div class="qa-answer">
+      <table>
+        <tr><th></th><th>Default</th><th>OnPush</th></tr>
+        <tr><td>Khi nào check</td><td>Mọi event/async/timer trong app</td><td>Chỉ khi: input ref thay đổi, event từ component, async pipe emit, markForCheck() được gọi</td></tr>
+        <tr><td>Performance</td><td>Chậm hơn với app lớn</td><td>Nhanh hơn đáng kể</td></tr>
+        <tr><td>Yêu cầu</td><td>Không có</td><td>Immutable data, Observable</td></tr>
+      </table>
+      <pre>@Component({
+  changeDetection: ChangeDetectionStrategy.OnPush
+})
+export class UserCard {
+  @Input() user: User; // phải là new reference để trigger check
+  // Dùng async pipe trong template — tự markForCheck khi emit
+}</pre>
+      <div class="tip">Best practice: tất cả components dùng OnPush + async pipe + immutable state = app nhanh mà ít bug.</div>
+    </div>
+  </div>
+
+  <div class="qa-card" onclick="toggle(this)">
+    <div class="qa-question">
+      <span class="qa-num">34</span>
+      <span class="qa-q-text">Subject vs BehaviorSubject vs ReplaySubject — khác nhau thế nào?</span>
+      <span class="qa-arrow">▼</span>
+    </div>
+    <div class="qa-answer">
+      <table>
+        <tr><th></th><th>Subject</th><th>BehaviorSubject</th><th>ReplaySubject</th></tr>
+        <tr><td>Initial value</td><td>Không</td><td>Có (required)</td><td>Không</td></tr>
+        <tr><td>Late subscriber nhận được</td><td>Không có gì</td><td>Giá trị cuối</td><td>N giá trị cuối</td></tr>
+        <tr><td>Use case</td><td>Events, actions</td><td>Current state, user data</td><td>Cache recent values</td></tr>
+      </table>
+      <pre>// BehaviorSubject — phổ biến nhất cho service state
+private userSubject = new BehaviorSubject&lt;User | null&gt;(null);
+user$ = this.userSubject.asObservable();
+getCurrentUser() { return this.userSubject.getValue(); }
+setUser(user: User) { this.userSubject.next(user); }</pre>
+    </div>
+  </div>
+
+  <div class="qa-card" onclick="toggle(this)">
+    <div class="qa-question">
+      <span class="qa-num">35</span>
+      <span class="qa-q-text">Dependency Injection trong Angular — providedIn: 'root' vs provide trong module?</span>
+      <span class="qa-arrow">▼</span>
+    </div>
+    <div class="qa-answer">
+      <ul>
+        <li><strong><code>providedIn: 'root'</code></strong>: Singleton toàn app. Tree-shakeable (nếu không dùng, không vào bundle). Dùng cho hầu hết services.</li>
+        <li><strong>Provide trong NgModule</strong>: Scoped đến module. Dùng khi cần instance riêng per lazy-loaded module.</li>
+        <li><strong>Provide trong Component</strong>: Instance riêng per component instance và children.</li>
+      </ul>
+      <pre>// providedIn: 'root' — phổ biến nhất
+@Injectable({ providedIn: 'root' })
+export class AuthService {}
+
+// Component-level — mỗi instance có service riêng
+@Component({
+  providers: [FormBuilderService]
+})
+
+// Multi providers — override/extend service
+{ provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true }</pre>
+    </div>
+  </div>
+
+  <div class="qa-card" onclick="toggle(this)">
+    <div class="qa-question">
+      <span class="qa-num">36</span>
+      <span class="qa-q-text">ngOnChanges vs ngOnInit — khi nào dùng cái nào?</span>
+      <span class="qa-arrow">▼</span>
+    </div>
+    <div class="qa-answer">
+      <table>
+        <tr><th></th><th>ngOnChanges</th><th>ngOnInit</th></tr>
+        <tr><td>Gọi khi</td><td>Mỗi lần @Input thay đổi</td><td>Một lần sau khi inputs được set lần đầu</td></tr>
+        <tr><td>Tham số</td><td>SimpleChanges — biết previous/current value</td><td>Không có</td></tr>
+        <tr><td>Use case</td><td>React to input changes, compute derived values</td><td>Init data, subscribe, setup</td></tr>
+      </table>
+      <pre>ngOnChanges(changes: SimpleChanges) {
+  if (changes['userId'] && !changes['userId'].firstChange) {
+    this.loadUser(changes['userId'].currentValue);
+  }
+}</pre>
+      <div class="tip"><code>ngOnChanges</code> chạy <em>trước</em> <code>ngOnInit</code>. Dùng <code>ngOnChanges</code> khi cần respond to input updates sau khi đã init.</div>
+    </div>
+  </div>
+
+  <div class="qa-card" onclick="toggle(this)">
+    <div class="qa-question">
+      <span class="qa-num">37</span>
+      <span class="qa-q-text">AsyncPipe — tại sao nên dùng thay vì subscribe thủ công?</span>
+      <span class="qa-arrow">▼</span>
+    </div>
+    <div class="qa-answer">
+      <ul>
+        <li><strong>Auto unsubscribe</strong>: Khi component destroy → tự unsubscribe → không memory leak.</li>
+        <li><strong>Trigger change detection</strong>: Với OnPush, async pipe tự <code>markForCheck()</code> khi emit mới.</li>
+        <li><strong>Ít code hơn</strong>: Không cần <code>ngOnInit</code> + <code>ngOnDestroy</code> + manual subscription.</li>
+      </ul>
+      <pre>// ❌ Manual — dễ memory leak
+ngOnInit() { this.sub = this.user$.subscribe(u =&gt; this.user = u); }
+ngOnDestroy() { this.sub.unsubscribe(); }
+
+// ✅ Async pipe — clean, safe
+// Template: {{ user$ | async }}
+// Hoặc: &lt;ng-container *ngIf="user$ | async as user"&gt;</pre>
+    </div>
+  </div>
+
+  <div class="qa-card" onclick="toggle(this)">
+    <div class="qa-question">
+      <span class="qa-num">38</span>
+      <span class="qa-q-text">ViewChild vs ContentChild — khác nhau thế nào?</span>
+      <span class="qa-arrow">▼</span>
+    </div>
+    <div class="qa-answer">
+      <ul>
+        <li><strong>ViewChild</strong>: Truy cập element/component được định nghĩa trong template của chính component (<code>@Component template</code>).</li>
+        <li><strong>ContentChild</strong>: Truy cập element được project vào qua <code>&lt;ng-content&gt;</code> từ parent (content projection).</li>
+      </ul>
+      <pre>// ViewChild
+@ViewChild('myInput') inputRef: ElementRef;
+ngAfterViewInit() { this.inputRef.nativeElement.focus(); }
+
+// ContentChild — truy cập projected content
+@ContentChild(TabComponent) firstTab: TabComponent;
+ngAfterContentInit() { this.firstTab.activate(); }</pre>
+    </div>
+  </div>
+
+  <div class="qa-card" onclick="toggle(this)">
+    <div class="qa-question">
+      <span class="qa-num">39</span>
+      <span class="qa-q-text">Standalone components trong Angular 14+ là gì?</span>
+      <span class="qa-arrow">▼</span>
+    </div>
+    <div class="qa-answer">
+      <p>Standalone component không cần thuộc NgModule. Import trực tiếp dependencies vào component.</p>
+      <pre>@Component({
+  standalone: true,
+  imports: [CommonModule, RouterModule, ReactiveFormsModule],
+  template: `...`
+})
+export class UserProfileComponent {}
+
+// Bootstrap standalone app
+bootstrapApplication(AppComponent, {
+  providers: [provideRouter(routes), provideHttpClient()]
+});</pre>
+      <div class="tip">Angular 17+ mặc định tạo standalone components. Giảm boilerplate module, tree-shaking tốt hơn, lazy loading dễ hơn.</div>
+    </div>
+  </div>
+
+  <div class="qa-card" onclick="toggle(this)">
+    <div class="qa-question">
+      <span class="qa-num">40</span>
+      <span class="qa-q-text">Angular Signals là gì (Angular 16+)?</span>
+      <span class="qa-arrow">▼</span>
+    </div>
+    <div class="qa-answer">
+      <p>Signals là reactive primitives mới trong Angular — tương tự Vue ref/computed. Fine-grained reactivity, không cần Zone.js.</p>
+      <pre>import { signal, computed, effect } from '@angular/core';
+
+const count = signal(0);
+const doubled = computed(() =&gt; count() * 2);
+
+effect(() =&gt; console.log('Count:', count())); // auto-track deps
+
+// Update
+count.set(5);
+count.update(c =&gt; c + 1);
+
+// Template: {{ count() }} (gọi như function)</pre>
+      <div class="tip">Signals + OnPush = change detection không cần Zone.js → performance tốt hơn đáng kể. Đây là hướng Angular đang đi.</div>
+    </div>
+  </div>
+</div>
+
+<!-- ════════════════════════════════════════ AUTH ════════════════════════════════════════ -->
+<div class="section" id="auth">
+  <div class="section-header">
+    <div class="section-icon" style="background:var(--tag-auth);">🔐</div>
+    <span class="section-title">Authentication &amp; Authorization</span>
+    <span class="section-count">16 câu</span>
+  </div>
+
+  <div class="qa-card" onclick="toggle(this)">
+    <div class="qa-question">
+      <span class="qa-num">41</span>
+      <span class="qa-q-text">Authentication vs Authorization — khác nhau thế nào?</span>
+      <span class="qa-arrow">▼</span>
+    </div>
+    <div class="qa-answer">
+      <ul>
+        <li><strong>Authentication (AuthN)</strong>: Xác thực <em>bạn là ai</em>. VD: login với email/password, Google SSO.</li>
+        <li><strong>Authorization (AuthZ)</strong>: Xác định <em>bạn được làm gì</em>. VD: user thường không thể xóa bài của người khác.</li>
+      </ul>
+      <p>Thứ tự: AuthN luôn xảy ra trước AuthZ. Bạn phải biết bạn là ai trước khi quyết định quyền.</p>
+      <div class="tip">Front-end chỉ làm AuthZ ở UI layer (ẩn/hiện button). Enforcement thực sự PHẢI ở backend — không bao giờ tin hoàn toàn vào client-side authorization.</div>
+    </div>
+  </div>
+
+  <div class="qa-card" onclick="toggle(this)">
+    <div class="qa-question">
+      <span class="qa-num">42</span>
+      <span class="qa-q-text">JWT hoạt động như thế nào? Cấu trúc gồm những phần nào?</span>
+      <span class="qa-arrow">▼</span>
+    </div>
+    <div class="qa-answer">
+      <p>JWT (JSON Web Token) = <strong>Header.Payload.Signature</strong>, mỗi phần base64url encoded.</p>
+      <ul>
+        <li><strong>Header</strong>: Algorithm (HS256, RS256) + type</li>
+        <li><strong>Payload</strong>: Claims — userId, roles, exp, iat... Không mã hóa → <em>ai cũng đọc được</em></li>
+        <li><strong>Signature</strong>: HMAC(header + payload, secret) — đảm bảo token không bị tamper</li>
+      </ul>
+      <pre>// Verify flow:
+// 1. Server nhận token
+// 2. Tách header + payload, tính lại signature
+// 3. So sánh với signature trong token
+// 4. Check exp (hết hạn chưa)
+// Không cần DB lookup → stateless → scalable
+
+// ⚠️ Payload không encrypt → ĐỪNG lưu sensitive data (password, SSN)</pre>
+    </div>
+  </div>
+
+  <div class="qa-card" onclick="toggle(this)">
+    <div class="qa-question">
+      <span class="qa-num">43</span>
+      <span class="qa-q-text">Tại sao không nên lưu JWT trong localStorage? Lưu ở đâu tốt hơn?</span>
+      <span class="qa-arrow">▼</span>
+    </div>
+    <div class="qa-answer">
+      <p><strong>localStorage</strong> dễ bị XSS: mọi JS trên trang (kể cả injected script) đều đọc được <code>localStorage</code>.</p>
+      <table>
+        <tr><th>Storage</th><th>XSS risk</th><th>CSRF risk</th><th>Notes</th></tr>
+        <tr><td>localStorage</td><td>❌ Cao</td><td>✅ An toàn</td><td>Không dùng cho auth token</td></tr>
+        <tr><td>HttpOnly Cookie</td><td>✅ An toàn</td><td>❌ Có risk</td><td>Cần SameSite + CSRF token</td></tr>
+        <tr><td>Memory (JS var)</td><td>✅ An toàn</td><td>✅ An toàn</td><td>Mất khi refresh</td></tr>
+      </table>
+      <p><strong>Best practice:</strong> Access token trong memory + Refresh token trong <code>HttpOnly; Secure; SameSite=Strict</code> cookie.</p>
+    </div>
+  </div>
+
+  <div class="qa-card" onclick="toggle(this)">
+    <div class="qa-question">
+      <span class="qa-num">44</span>
+      <span class="qa-q-text">Access token vs Refresh token — flow xử lý khi access token hết hạn?</span>
+      <span class="qa-arrow">▼</span>
+    </div>
+    <div class="qa-answer">
+      <ul>
+        <li><strong>Access token</strong>: Short-lived (5-15 phút). Dùng để authenticate API requests.</li>
+        <li><strong>Refresh token</strong>: Long-lived (7-30 ngày). Chỉ dùng để lấy access token mới.</li>
+      </ul>
+      <pre>// Silent refresh flow (Axios interceptor)
+axiosInstance.interceptors.response.use(
+  res =&gt; res,
+  async (error) =&gt; {
+    if (error.response?.status === 401 &amp;&amp; !error.config._retry) {
+      error.config._retry = true;
+      try {
+        await refreshAccessToken(); // call /auth/refresh
+        return axiosInstance(error.config); // retry original request
+      } catch {
+        logout(); // refresh cũng hết hạn → logout
+      }
+    }
+    return Promise.reject(error);
+  }
+);</pre>
+      <div class="tip">Dùng queue để không gọi refresh nhiều lần đồng thời khi nhiều requests 401 cùng lúc.</div>
+    </div>
+  </div>
+
+  <div class="qa-card" onclick="toggle(this)">
+    <div class="qa-question">
+      <span class="qa-num">45</span>
+      <span class="qa-q-text">Cookie HttpOnly, Secure, SameSite — từng attribute bảo vệ khỏi tấn công gì?</span>
+      <span class="qa-arrow">▼</span>
+    </div>
+    <div class="qa-answer">
+      <table>
+        <tr><th>Attribute</th><th>Bảo vệ khỏi</th><th>Cách hoạt động</th></tr>
+        <tr><td><code>HttpOnly</code></td><td>XSS</td><td>JS không đọc được cookie (<code>document.cookie</code> không hiện)</td></tr>
+        <tr><td><code>Secure</code></td><td>Man-in-the-Middle</td><td>Chỉ gửi qua HTTPS</td></tr>
+        <tr><td><code>SameSite=Strict</code></td><td>CSRF</td><td>Không gửi cookie trong cross-site requests</td></tr>
+        <tr><td><code>SameSite=Lax</code></td><td>CSRF (một phần)</td><td>Gửi trong top-level navigation GET, không trong POST/iframe</td></tr>
+      </table>
+    </div>
+  </div>
+
+  <div class="qa-card" onclick="toggle(this)">
+    <div class="qa-question">
+      <span class="qa-num">46</span>
+      <span class="qa-q-text">OAuth 2.0 flow — Authorization Code vs PKCE?</span>
+      <span class="qa-arrow">▼</span>
+    </div>
+    <div class="qa-answer">
+      <p><strong>Authorization Code flow:</strong> User → Auth server → redirect với code → Exchange code lấy token (server-to-server).</p>
+      <p><strong>PKCE (Proof Key for Code Exchange)</strong>: Extension cho public clients (SPA, mobile) không có client secret:</p>
+      <ol>
+        <li>App tạo random <code>code_verifier</code></li>
+        <li>Hash thành <code>code_challenge</code>, gửi kèm auth request</li>
+        <li>Auth server lưu <code>code_challenge</code></li>
+        <li>Khi exchange code, gửi <code>code_verifier</code> — server verify hash</li>
+      </ol>
+      <div class="tip">SPA luôn phải dùng <strong>PKCE</strong>. Implicit flow (gửi token trong URL fragment) đã deprecated — token lộ qua browser history, referer header.</div>
+    </div>
+  </div>
+
+  <div class="qa-card" onclick="toggle(this)">
+    <div class="qa-question">
+      <span class="qa-num">47</span>
+      <span class="qa-q-text">XSS attack — các pattern nguy hiểm phổ biến trong React/Angular?</span>
+      <span class="qa-arrow">▼</span>
+    </div>
+    <div class="qa-answer">
+      <pre>// React tự escape JSX → an toàn mặc định
+// ❌ Nguy hiểm: dangerouslySetInnerHTML
+&lt;div dangerouslySetInnerHTML={{ __html: userContent }} /&gt;
+// Fix: sanitize trước bằng DOMPurify
+import DOMPurify from 'dompurify';
+&lt;div dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(content) }} /&gt;
+
+// ❌ href injection
+&lt;a href={userInput}&gt;Click&lt;/a&gt; // userInput = "javascript:alert(1)"
+// Fix: validate URL scheme
+const safeHref = /^https?:\/\//.test(url) ? url : '#';
+
+// Angular tự sanitize [innerHTML] và binding
+// ❌ Nguy hiểm: bypassSecurityTrustHtml
+this.html = this.sanitizer.bypassSecurityTrustHtml(userContent); // chỉ dùng khi chắc chắn</pre>
+    </div>
+  </div>
+
+  <div class="qa-card" onclick="toggle(this)">
+    <div class="qa-question">
+      <span class="qa-num">48</span>
+      <span class="qa-q-text">CSRF attack là gì? Front-end cần làm gì để phòng tránh?</span>
+      <span class="qa-arrow">▼</span>
+    </div>
+    <div class="qa-answer">
+      <p><strong>CSRF</strong>: Trang web độc hại trick browser gửi request đến site khác kèm cookie của user.</p>
+      <p><strong>Front-end defenses:</strong></p>
+      <ul>
+        <li><strong>CSRF Token</strong>: Server trả về random token, client gửi kèm trong header (không phải cookie). Attacker không có token này.</li>
+        <li><strong>SameSite Cookie</strong>: <code>Strict</code>/<code>Lax</code> ngăn browser gửi cookie trong cross-origin requests.</li>
+        <li><strong>Custom header</strong>: Thêm <code>X-Requested-With: XMLHttpRequest</code> — CORS ngăn attacker set custom header.</li>
+      </ul>
+      <pre>// Axios: tự động gửi CSRF token từ cookie
+axios.defaults.xsrfCookieName = 'csrftoken';
+axios.defaults.xsrfHeaderName = 'X-CSRFToken';</pre>
+    </div>
+  </div>
+
+  <div class="qa-card" onclick="toggle(this)">
+    <div class="qa-question">
+      <span class="qa-num">49</span>
+      <span class="qa-q-text">Permission-based UI — ẩn/hiện button, route theo role như thế nào?</span>
+      <span class="qa-arrow">▼</span>
+    </div>
+    <div class="qa-answer">
+      <pre>// React — Custom hook
+function usePermission(permission: string) {
+  const { user } = useAuth();
+  return user?.permissions?.includes(permission) ?? false;
+}
+
+// Component
+const canDelete = usePermission('posts:delete');
+return canDelete ? &lt;DeleteButton /&gt; : null;
+
+// Angular — Directive
+@Directive({ selector: '[hasPermission]' })
+export class HasPermissionDirective {
+  @Input() set hasPermission(perm: string) {
+    if (!this.authService.hasPermission(perm)) {
+      this.vcr.clear(); // remove element từ DOM
+    }
+  }
+}
+// Template: &lt;button *hasPermission="'posts:delete'"&gt;Delete&lt;/button&gt;</pre>
+      <div class="warn">UI permission chỉ là UX improvement. Backend PHẢI validate quyền trên mọi request.</div>
+    </div>
+  </div>
+
+  <div class="qa-card" onclick="toggle(this)">
+    <div class="qa-question">
+      <span class="qa-num">50</span>
+      <span class="qa-q-text">Multi-tab logout — khi logout ở 1 tab, các tab khác cũng logout?</span>
+      <span class="qa-arrow">▼</span>
+    </div>
+    <div class="qa-answer">
+      <pre>// Cách 1: localStorage event (chỉ fire ở OTHER tabs, không fire ở tab gốc)
+window.addEventListener('storage', (event) =&gt; {
+  if (event.key === 'auth_logout') {
+    clearAuthState();
+    redirectToLogin();
+  }
+});
+// Khi logout:
+localStorage.setItem('auth_logout', Date.now().toString());
+localStorage.removeItem('auth_logout');
+
+// Cách 2: BroadcastChannel API (modern browsers)
+const channel = new BroadcastChannel('auth');
+channel.postMessage({ type: 'LOGOUT' });
+channel.onmessage = (e) =&gt; {
+  if (e.data.type === 'LOGOUT') logout();
+};</pre>
+      <div class="tip">BroadcastChannel được hỗ trợ tốt hơn, không cần hack với localStorage.</div>
+    </div>
+  </div>
+
+  <div class="qa-card" onclick="toggle(this)">
+    <div class="qa-question">
+      <span class="qa-num">51</span>
+      <span class="qa-q-text">Route Guard (React / Angular) — implement như thế nào?</span>
+      <span class="qa-arrow">▼</span>
+    </div>
+    <div class="qa-answer">
+      <pre>// React — ProtectedRoute component
+function ProtectedRoute({ children, requiredRole }) {
+  const { user, isLoading } = useAuth();
+  if (isLoading) return &lt;Spinner /&gt;;
+  if (!user) return &lt;Navigate to="/login" replace /&gt;;
+  if (requiredRole &amp;&amp; !user.roles.includes(requiredRole))
+    return &lt;Navigate to="/403" replace /&gt;;
+  return children;
+}
+
+// Angular — Route Guard (functional, Angular 14+)
+export const authGuard: CanActivateFn = (route, state) =&gt; {
+  const auth = inject(AuthService);
+  const router = inject(Router);
+  if (auth.isAuthenticated()) return true;
+  return router.createUrlTree(['/login'], {
+    queryParams: { returnUrl: state.url }
+  });
+};</pre>
+    </div>
+  </div>
+
+  <div class="qa-card" onclick="toggle(this)">
+    <div class="qa-question">
+      <span class="qa-num">52</span>
+      <span class="qa-q-text">id_token vs access_token trong OpenID Connect?</span>
+      <span class="qa-arrow">▼</span>
+    </div>
+    <div class="qa-answer">
+      <table>
+        <tr><th></th><th>id_token</th><th>access_token</th></tr>
+        <tr><td>Mục đích</td><td>Authentication — ai đang login</td><td>Authorization — được làm gì</td></tr>
+        <tr><td>Consumer</td><td>Client app (bạn)</td><td>API / Resource server</td></tr>
+        <tr><td>Claims</td><td>sub, email, name, picture</td><td>scopes, roles</td></tr>
+        <tr><td>Dùng để call API?</td><td>❌ Không</td><td>✅ Có</td></tr>
+      </table>
+      <div class="warn">Đừng gửi id_token lên API của bạn. Đừng dùng access_token để lấy thông tin user trong client app.</div>
+    </div>
+  </div>
+
+  <div class="qa-card" onclick="toggle(this)">
+    <div class="qa-question">
+      <span class="qa-num">53</span>
+      <span class="qa-q-text">Interceptor trong Axios/Angular HttpClient — dùng để làm gì trong auth flow?</span>
+      <span class="qa-arrow">▼</span>
+    </div>
+    <div class="qa-answer">
+      <pre>// Angular HTTP Interceptor
+@Injectable()
+export class AuthInterceptor implements HttpInterceptor {
+  intercept(req: HttpRequest&lt;any&gt;, next: HttpHandler) {
+    const token = this.authService.getAccessToken();
+    if (token) {
+      req = req.clone({
+        setHeaders: { Authorization: `Bearer ${token}` }
+      });
+    }
+    return next.handle(req).pipe(
+      catchError(err =&gt; {
+        if (err.status === 401) this.authService.refreshToken();
+        return throwError(() =&gt; err);
+      })
+    );
+  }
+}</pre>
+      <div class="tip">Interceptor giúp centralize auth logic — không cần set Authorization header thủ công ở từng API call.</div>
+    </div>
+  </div>
+
+  <div class="qa-card" onclick="toggle(this)">
+    <div class="qa-question">
+      <span class="qa-num">54</span>
+      <span class="qa-q-text">SSO hoạt động như thế nào? Bạn đã integrate với provider nào?</span>
+      <span class="qa-arrow">▼</span>
+    </div>
+    <div class="qa-answer">
+      <p><strong>SSO (Single Sign-On)</strong>: Login một lần, truy cập nhiều app. Dựa trên centralized Identity Provider (IdP).</p>
+      <p><strong>Flow cơ bản (SAML/OIDC):</strong></p>
+      <ol>
+        <li>User truy cập App A → chưa login → redirect đến IdP</li>
+        <li>User login tại IdP (Google Workspace, Azure AD, Okta)</li>
+        <li>IdP issue token/assertion → redirect về App A</li>
+        <li>User truy cập App B → IdP đã có session → auto-login</li>
+      </ol>
+      <pre>// Google OIDC với @react-oauth/google
+import { GoogleOAuthProvider, useGoogleLogin } from '@react-oauth/google';
+const login = useGoogleLogin({
+  onSuccess: async (tokenResponse) =&gt; {
+    // Gửi tokenResponse.access_token lên backend để verify
+    const user = await api.post('/auth/google', { token });
+  }
+});</pre>
+    </div>
+  </div>
+
+  <div class="qa-card" onclick="toggle(this)">
+    <div class="qa-question">
+      <span class="qa-num">55</span>
+      <span class="qa-q-text">Silent refresh (auto renew token) không làm gián đoạn UX?</span>
+      <span class="qa-arrow">▼</span>
+    </div>
+    <div class="qa-answer">
+      <pre>// Strategy 1: Refresh trước khi hết hạn (proactive)
+function scheduleRefresh(expiresIn: number) {
+  const refreshAt = (expiresIn - 60) * 1000; // 1 phút trước khi hết hạn
+  setTimeout(async () =&gt; {
+    await refreshAccessToken();
+    // Schedule lại cho token mới
+  }, refreshAt);
+}
+
+// Strategy 2: Refresh khi gặp 401 (reactive) — xem câu 44
+
+// Strategy 3: Hidden iframe (OIDC legacy)
+// Tạo iframe đến IdP /authorize?prompt=none
+// IdP trả code nếu còn session → exchange lấy token mới
+// (Bị block bởi nhiều browser vì third-party cookie)</pre>
+      <div class="tip">Strategy 1 (proactive) cho UX tốt nhất. Kết hợp với Strategy 2 làm fallback.</div>
+    </div>
+  </div>
+
+  <div class="qa-card" onclick="toggle(this)">
+    <div class="qa-question">
+      <span class="qa-num">56</span>
+      <span class="qa-q-text">Content Security Policy (CSP) là gì, liên quan đến XSS như thế nào?</span>
+      <span class="qa-arrow">▼</span>
+    </div>
+    <div class="qa-answer">
+      <p>CSP là HTTP header cho phép whitelist nguồn tài nguyên. Ngay cả khi có XSS, script injected từ domain không được phép sẽ bị block.</p>
+      <pre>// HTTP header từ server
+Content-Security-Policy: 
+  default-src 'self';
+  script-src 'self' 'nonce-{random}' https://trusted.cdn.com;
+  style-src 'self' 'unsafe-inline';
+  img-src 'self' data: https:;
+  connect-src 'self' https://api.example.com;
+
+// Với React/Angular: tránh inline scripts, dùng nonce cho dynamic scripts</pre>
+      <div class="tip">CSP là defense-in-depth — không thay thế việc sanitize input, nhưng là lớp bảo vệ thêm rất quan trọng.</div>
+    </div>
+  </div>
+</div>
+
+<!-- ════════════════════════════════════════ PERFORMANCE ════════════════════════════════════════ -->
+<div class="section" id="perf">
+  <div class="section-header">
+    <div class="section-icon" style="background:var(--tag-perf);">⚡</div>
+    <span class="section-title">Performance</span>
+    <span class="section-count">18 câu</span>
+  </div>
+
+  <div class="qa-card" onclick="toggle(this)">
+    <div class="qa-question">
+      <span class="qa-num">57</span>
+      <span class="qa-q-text">SSR vs CSR vs SSG vs ISR — trade-off, khi nào chọn cái nào?</span>
+      <span class="qa-arrow">▼</span>
+    </div>
+    <div class="qa-answer">
+      <table>
+        <tr><th>Mode</th><th>HTML gen khi</th><th>Pros</th><th>Cons</th><th>Use case</th></tr>
+        <tr><td>CSR</td><td>Runtime (client)</td><td>Rich interactivity</td><td>Chậm FCP, SEO kém</td><td>Dashboard, SaaS app</td></tr>
+        <tr><td>SSR</td><td>Per request (server)</td><td>SEO tốt, FCP nhanh</td><td>Server cost, TTFB chậm hơn</td><td>E-commerce, news</td></tr>
+        <tr><td>SSG</td><td>Build time</td><td>Cực nhanh, CDN cache</td><td>Phải rebuild để update</td><td>Blog, docs, marketing</td></tr>
+        <tr><td>ISR</td><td>Build + revalidate theo thời gian</td><td>Fresh data + CDN speed</td><td>Phức tạp hơn SSG</td><td>Product pages, news</td></tr>
+      </table>
+      <p>Next.js hỗ trợ tất cả 4 mode. Remix/Angular Universal/Nuxt cho SSR.</p>
+    </div>
+  </div>
+
+  <div class="qa-card" onclick="toggle(this)">
+    <div class="qa-question">
+      <span class="qa-num">58</span>
+      <span class="qa-q-text">Web Vitals (LCP, CLS, INP) là gì, bạn đã cải thiện chúng chưa?</span>
+      <span class="qa-arrow">▼</span>
+    </div>
+    <div class="qa-answer">
+      <table>
+        <tr><th>Metric</th><th>Đo gì</th><th>Target</th><th>Fix thường gặp</th></tr>
+        <tr><td>LCP</td><td>Largest Contentful Paint — khi nào element lớn nhất hiển thị</td><td>&lt; 2.5s</td><td>Preload hero image, SSR, CDN</td></tr>
+        <tr><td>CLS</td><td>Cumulative Layout Shift — page có nhảy không</td><td>&lt; 0.1</td><td>Set width/height cho image, tránh inject content trên cùng</td></tr>
+        <tr><td>INP</td><td>Interaction to Next Paint — responsive với input</td><td>&lt; 200ms</td><td>Giảm JS trên main thread, useTransition, web workers</td></tr>
+      </table>
+      <div class="tip">Đo bằng Chrome DevTools Lighthouse, PageSpeed Insights, hoặc <code>web-vitals</code> npm package để track real user metrics.</div>
+    </div>
+  </div>
+
+  <div class="qa-card" onclick="toggle(this)">
+    <div class="qa-question">
+      <span class="qa-num">59</span>
+      <span class="qa-q-text">Virtualization (react-window) — khi nào bắt buộc phải dùng?</span>
+      <span class="qa-arrow">▼</span>
+    </div>
+    <div class="qa-answer">
+      <p>Virtualization chỉ render những items <em>hiện có trong viewport</em>, không render toàn bộ list.</p>
+      <p><strong>Bắt buộc khi:</strong></p>
+      <ul>
+        <li>List > 100-200 items phức tạp → DOM nodes nhiều → scroll chậm, memory cao</li>
+        <li>Infinite scroll với data lớn</li>
+        <li>Table với hàng nghìn rows</li>
+      </ul>
+      <pre>import { FixedSizeList } from 'react-window';
+
+&lt;FixedSizeList
+  height={600}
+  itemCount={10000}
+  itemSize={50}      // height mỗi row
+  width="100%"
+&gt;
+  {({ index, style }) =&gt; (
+    &lt;div style={style}&gt;Row {index}: {data[index].name}&lt;/div&gt;
+  )}
+&lt;/FixedSizeList&gt;</pre>
+    </div>
+  </div>
+
+  <div class="qa-card" onclick="toggle(this)">
+    <div class="qa-question">
+      <span class="qa-num">60</span>
+      <span class="qa-q-text">Memory leak trong SPA xảy ra như thế nào, cách phòng tránh?</span>
+      <span class="qa-arrow">▼</span>
+    </div>
+    <div class="qa-answer">
+      <p><strong>Nguyên nhân phổ biến:</strong></p>
+      <ul>
+        <li>Không unsubscribe Observable khi component destroy (Angular)</li>
+        <li>Event listener không được remove</li>
+        <li>setInterval/setTimeout không clear</li>
+        <li>Closure giữ reference đến large object</li>
+        <li>Global state tích lũy không giới hạn</li>
+      </ul>
+      <pre>// Angular — pattern an toàn với takeUntilDestroyed (Angular 16+)
+service.data$.pipe(
+  takeUntilDestroyed(this.destroyRef)
+).subscribe(data =&gt; this.data = data);
+
+// React — cleanup trong useEffect
+useEffect(() =&gt; {
+  const handler = () =&gt; update();
+  window.addEventListener('resize', handler);
+  const id = setInterval(tick, 1000);
+  return () =&gt; {
+    window.removeEventListener('resize', handler);
+    clearInterval(id);
+  };
+}, []);</pre>
+    </div>
+  </div>
+
+  <div class="qa-card" onclick="toggle(this)">
+    <div class="qa-question">
+      <span class="qa-num">61</span>
+      <span class="qa-q-text">Preload vs Prefetch vs Preconnect — dùng khi nào?</span>
+      <span class="qa-arrow">▼</span>
+    </div>
+    <div class="qa-answer">
+      <table>
+        <tr><th>Hint</th><th>Timing</th><th>Ưu tiên</th><th>Use case</th></tr>
+        <tr><td><code>preload</code></td><td>Ngay lập tức</td><td>Cao</td><td>Critical resource cho current page (hero image, critical font, main script)</td></tr>
+        <tr><td><code>prefetch</code></td><td>Idle time</td><td>Thấp</td><td>Resource cần cho trang tiếp theo</td></tr>
+        <tr><td><code>preconnect</code></td><td>Ngay lập tức</td><td>Trung bình</td><td>Kết nối đến domain sẽ dùng (DNS + TCP + TLS handshake trước)</td></tr>
+        <tr><td><code>dns-prefetch</code></td><td>Ngay lập tức</td><td>Thấp</td><td>Chỉ DNS lookup, nhẹ hơn preconnect</td></tr>
+      </table>
+      <pre>&lt;link rel="preload" href="/fonts/Inter.woff2" as="font" crossorigin&gt;
+&lt;link rel="preconnect" href="https://api.example.com"&gt;
+&lt;link rel="prefetch" href="/next-page-chunk.js"&gt;</pre>
+    </div>
+  </div>
+
+  <div class="qa-card" onclick="toggle(this)">
+    <div class="qa-question">
+      <span class="qa-num">62</span>
+      <span class="qa-q-text">Image optimization — lazy load, WebP, srcset trong dự án thực?</span>
+      <span class="qa-arrow">▼</span>
+    </div>
+    <div class="qa-answer">
+      <pre>// Native lazy loading
+&lt;img src="photo.webp" loading="lazy" decoding="async"
+     width="800" height="600" alt="..." /&gt;
+
+// Responsive images với srcset
+&lt;img
+  src="image-400.webp"
+  srcset="image-400.webp 400w, image-800.webp 800w, image-1200.webp 1200w"
+  sizes="(max-width: 600px) 400px, (max-width: 1000px) 800px, 1200px"
+  alt="..."
+/&gt;
+
+// Next.js Image component — tự xử lý tất cả
+&lt;Image src="/photo.jpg" width={800} height={600} alt="..." priority={isHero} /&gt;</pre>
+      <div class="tip">WebP ~25-35% nhỏ hơn JPEG. AVIF nhỏ hơn nữa nhưng encode chậm. Dùng <code>&lt;picture&gt;</code> với fallback cho browser cũ.</div>
+    </div>
+  </div>
+
+  <div class="qa-card" onclick="toggle(this)">
+    <div class="qa-question">
+      <span class="qa-num">63</span>
+      <span class="qa-q-text">HTTP/1.1 vs HTTP/2 vs HTTP/3 — ảnh hưởng đến front-end?</span>
+      <span class="qa-arrow">▼</span>
+    </div>
+    <div class="qa-answer">
+      <table>
+        <tr><th>Version</th><th>Điểm nổi bật</th><th>Ảnh hưởng front-end</th></tr>
+        <tr><td>HTTP/1.1</td><td>6 connections/domain, head-of-line blocking</td><td>Domain sharding, bundle everything, sprite</td></tr>
+        <tr><td>HTTP/2</td><td>Multiplexing, header compression, server push</td><td>Nhiều small files OK, bỏ domain sharding</td></tr>
+        <tr><td>HTTP/3</td><td>QUIC (UDP), không head-of-line blocking, fast reconnect</td><td>Better mobile performance, kém packet loss</td></tr>
+      </table>
+      <div class="tip">HTTP/2 phổ biến rộng rãi. Với HTTP/2, strategy "nhiều file nhỏ" tốt hơn "một bundle to" — nhưng vẫn cần balance với parse time.</div>
+    </div>
+  </div>
+
+  <div class="qa-card" onclick="toggle(this)">
+    <div class="qa-question">
+      <span class="qa-num">64</span>
+      <span class="qa-q-text">Caching strategy ở front-end — Cache-Control, Service Worker?</span>
+      <span class="qa-arrow">▼</span>
+    </div>
+    <div class="qa-answer">
+      <pre>// Cache-Control headers (server set, browser follow)
+Cache-Control: max-age=31536000, immutable  // Static assets với hash trong tên (bundle.abc123.js)
+Cache-Control: no-cache                      // HTML — luôn revalidate
+Cache-Control: no-store                      // Sensitive data — không cache
+
+// Service Worker — offline-first, advanced caching
+// Cache First: assets (fonts, images)
+// Network First: API calls
+// Stale While Revalidate: pages
+
+// Workbox (từ Google) — dễ config Service Worker
+import { registerRoute } from 'workbox-routing';
+import { CacheFirst, NetworkFirst } from 'workbox-strategies';
+registerRoute(({ request }) =&gt; request.destination === 'image', new CacheFirst());</pre>
+    </div>
+  </div>
+
+  <div class="qa-card" onclick="toggle(this)">
+    <div class="qa-question">
+      <span class="qa-num">65</span>
+      <span class="qa-q-text">defer vs async script — khác nhau thế nào?</span>
+      <span class="qa-arrow">▼</span>
+    </div>
+    <div class="qa-answer">
+      <table>
+        <tr><th>Attribute</th><th>Download</th><th>Execute</th><th>Order</th></tr>
+        <tr><td>Không có</td><td>Ngay lập tức (block HTML parse)</td><td>Ngay sau download</td><td>Đúng thứ tự</td></tr>
+        <tr><td><code>async</code></td><td>Song song với HTML parse</td><td>Ngay sau download (có thể block parse)</td><td>Không đảm bảo</td></tr>
+        <tr><td><code>defer</code></td><td>Song song với HTML parse</td><td>Sau khi HTML parse xong, trước DOMContentLoaded</td><td>Đúng thứ tự</td></tr>
+      </table>
+      <div class="tip"><code>defer</code> hầu hết trường hợp tốt hơn. <code>async</code> cho scripts độc lập không quan tâm thứ tự (analytics, ads).</div>
+    </div>
+  </div>
+
+  <div class="qa-card" onclick="toggle(this)">
+    <div class="qa-question">
+      <span class="qa-num">66</span>
+      <span class="qa-q-text">Layout thrashing là gì và cách tránh?</span>
+      <span class="qa-arrow">▼</span>
+    </div>
+    <div class="qa-answer">
+      <p>Layout thrashing (forced synchronous layout) xảy ra khi đọc và ghi DOM xen kẽ nhau, buộc browser phải recalculate layout nhiều lần trong một frame.</p>
+      <pre>// ❌ Tệ — đọc/ghi xen kẽ, mỗi lần đọc force browser recalc
+elements.forEach(el =&gt; {
+  const height = el.offsetHeight; // read → force layout
+  el.style.height = height * 2 + 'px'; // write
+}); // N layouts!
+
+// ✅ Tốt — batch reads, batch writes
+const heights = elements.map(el =&gt; el.offsetHeight); // tất cả reads
+elements.forEach((el, i) =&gt; {
+  el.style.height = heights[i] * 2 + 'px'; // tất cả writes
+}); // 1 layout
+
+// Hoặc dùng requestAnimationFrame để group writes</pre>
+    </div>
+  </div>
+
+  <div class="qa-card" onclick="toggle(this)">
+    <div class="qa-question">
+      <span class="qa-num">67</span>
+      <span class="qa-q-text">Web Workers — khi nào cần dùng?</span>
+      <span class="qa-arrow">▼</span>
+    </div>
+    <div class="qa-answer">
+      <p>Web Worker chạy JS trên background thread, không block main thread (UI).</p>
+      <p><strong>Use case:</strong> Heavy computation (image processing, crypto, large data parsing, complex sorting/filtering).</p>
+      <pre>// main.js
+const worker = new Worker('./worker.js');
+worker.postMessage({ data: largeArray });
+worker.onmessage = (e) =&gt; setResult(e.data.result);
+
+// worker.js
+self.onmessage = (e) =&gt; {
+  const result = heavyComputation(e.data.data);
+  self.postMessage({ result });
+};
+
+// React + comlink (type-safe worker)
+import { wrap } from 'comlink';
+const api = wrap(new Worker(new URL('./worker', import.meta.url)));</pre>
+    </div>
+  </div>
+
+  <div class="qa-card" onclick="toggle(this)">
+    <div class="qa-question">
+      <span class="qa-num">68</span>
+      <span class="qa-q-text">Skeleton screen vs Spinner — cái nào cho UX tốt hơn và tại sao?</span>
+      <span class="qa-arrow">▼</span>
+    </div>
+    <div class="qa-answer">
+      <p><strong>Skeleton screen</strong> cho UX tốt hơn trong hầu hết trường hợp:</p>
+      <ul>
+        <li>Người dùng cảm nhận trang load <em>nhanh hơn</em> (perceived performance) vì thấy layout ngay</li>
+        <li>Giảm layout shift khi content load vào</li>
+        <li>Ít gây lo lắng hơn spinner (spinner không cho biết còn bao lâu)</li>
+      </ul>
+      <p><strong>Dùng Spinner khi:</strong> Action ngắn (&lt; 1 giây), không biết trước layout (VD: submit button).</p>
+      <div class="tip">Facebook, LinkedIn, YouTube đều dùng skeleton. Research cho thấy skeleton giảm perceived wait time 20-30%.</div>
+    </div>
+  </div>
+
+  <div class="qa-card" onclick="toggle(this)">
+    <div class="qa-question">
+      <span class="qa-num">69</span>
+      <span class="qa-q-text">Profile performance React app — tools nào bạn dùng?</span>
+      <span class="qa-arrow">▼</span>
+    </div>
+    <div class="qa-answer">
+      <ul>
+        <li><strong>React DevTools Profiler</strong>: Record renders, xem component nào render lâu, re-render bao nhiêu lần, tại sao render.</li>
+        <li><strong>Chrome DevTools Performance tab</strong>: Flame chart, main thread activity, layout/paint time.</li>
+        <li><strong>Chrome DevTools Memory tab</strong>: Heap snapshot, detect memory leak.</li>
+        <li><strong>Lighthouse</strong>: Automated audit — performance score, Web Vitals, actionable suggestions.</li>
+        <li><strong>web-vitals library</strong>: Đo real user metrics trong production.</li>
+      </ul>
+      <div class="tip">Workflow: Lighthouse để identify vấn đề → Performance tab để drill down → React Profiler để tìm component cụ thể.</div>
+    </div>
+  </div>
+
+  <div class="qa-card" onclick="toggle(this)">
+    <div class="qa-question">
+      <span class="qa-num">70</span>
+      <span class="qa-q-text">TrackBy trong Angular *ngFor — tại sao quan trọng?</span>
+      <span class="qa-arrow">▼</span>
+    </div>
+    <div class="qa-answer">
+      <pre>// ❌ Không có trackBy — mỗi lần items thay đổi, Angular re-render toàn bộ list
+&lt;li *ngFor="let item of items"&gt;{{ item.name }}&lt;/li&gt;
+
+// ✅ Với trackBy — Angular chỉ update DOM nodes thực sự thay đổi
+&lt;li *ngFor="let item of items; trackBy: trackById"&gt;{{ item.name }}&lt;/li&gt;
+
+trackById(index: number, item: Item): number {
+  return item.id; // stable identity
+}</pre>
+      <p>Giống như <code>key</code> trong React. Quan trọng đặc biệt với large lists hoặc items có component con phức tạp (tránh unnecessary destroy/recreate).</p>
+    </div>
+  </div>
+
+  <div class="qa-card" onclick="toggle(this)">
+    <div class="qa-question">
+      <span class="qa-num">71</span>
+      <span class="qa-q-text">Intersection Observer API — use case thực tế?</span>
+      <span class="qa-arrow">▼</span>
+    </div>
+    <div class="qa-answer">
+      <pre>// Infinite scroll
+const observer = new IntersectionObserver((entries) =&gt; {
+  if (entries[0].isIntersecting) loadMoreData();
+}, { threshold: 0.1 });
+observer.observe(sentinelEl); // element ở cuối list
+
+// Lazy load image
+const imgObserver = new IntersectionObserver((entries) =&gt; {
+  entries.forEach(entry =&gt; {
+    if (entry.isIntersecting) {
+      entry.target.src = entry.target.dataset.src;
+      imgObserver.unobserve(entry.target);
+    }
+  });
+});
+
+// Animate on scroll
+const animObserver = new IntersectionObserver((entries) =&gt; {
+  entries.forEach(e =&gt; e.target.classList.toggle('visible', e.isIntersecting));
+}, { threshold: 0.2 });</pre>
+      <div class="tip">Tốt hơn nhiều so với scroll event listener — không cần throttle, browser-optimized, không block main thread.</div>
+    </div>
+  </div>
+
+  <div class="qa-card" onclick="toggle(this)">
+    <div class="qa-question">
+      <span class="qa-num">72</span>
+      <span class="qa-q-text">will-change CSS — khi nào dùng và khi nào KHÔNG nên?</span>
+      <span class="qa-arrow">▼</span>
+    </div>
+    <div class="qa-answer">
+      <pre>/* ✅ Dùng khi: element sắp animate, biết trước */
+.modal { will-change: transform, opacity; }
+
+/* ❌ KHÔNG dùng: */
+/* 1. Không dùng cho mọi element — tốn GPU memory */
+* { will-change: transform; } /* rất tệ! */
+
+/* 2. Không static — add/remove dynamically */
+// JS
+el.style.willChange = 'transform'; // trước animation
+el.addEventListener('animationend', () =&gt; {
+  el.style.willChange = 'auto'; // sau animation
+});</pre>
+      <div class="warn"><code>will-change</code> tạo compositing layer mới — tốn GPU memory. Dùng sparingly và remove sau khi animation xong.</div>
+    </div>
+  </div>
+</div>
+
+<!-- ════════════════════════════════════════ BUNDLING ════════════════════════════════════════ -->
+<div class="section" id="bundle">
+  <div class="section-header">
+    <div class="section-icon" style="background:var(--tag-bundle);">📦</div>
+    <span class="section-title">Bundling &amp; Build Tools</span>
+    <span class="section-count">16 câu</span>
+  </div>
+
+  <div class="qa-card" onclick="toggle(this)">
+    <div class="qa-question">
+      <span class="qa-num">73</span>
+      <span class="qa-q-text">Webpack hoạt động như thế nào ở high level? Entry, Output, Loader, Plugin?</span>
+      <span class="qa-arrow">▼</span>
+    </div>
+    <div class="qa-answer">
+      <p>Webpack = <em>module bundler</em>. Đọc code, resolve dependencies, transform, và output bundles.</p>
+      <ul>
+        <li><strong>Entry</strong>: Điểm bắt đầu của dependency graph (thường <code>src/index.js</code>)</li>
+        <li><strong>Output</strong>: Nơi và tên file output</li>
+        <li><strong>Loader</strong>: Transform files trước khi add vào graph. VD: <code>ts-loader</code> chuyển TS → JS, <code>css-loader</code> cho CSS</li>
+        <li><strong>Plugin</strong>: Powerful hooks vào build process. VD: <code>HtmlWebpackPlugin</code>, <code>MiniCssExtractPlugin</code></li>
+        <li><strong>Mode</strong>: development/production → bật/tắt optimizations tương ứng</li>
+      </ul>
+      <pre>// webpack.config.js
+module.exports = {
+  entry: './src/index.tsx',
+  output: { path: path.resolve(__dirname, 'dist'), filename: '[name].[contenthash].js' },
+  module: { rules: [{ test: /\.tsx?$/, use: 'ts-loader' }] },
+  plugins: [new HtmlWebpackPlugin({ template: './public/index.html' })]
+};</pre>
+    </div>
+  </div>
+
+  <div class="qa-card" onclick="toggle(this)">
+    <div class="qa-question">
+      <span class="qa-num">74</span>
+      <span class="qa-q-text">Tree shaking là gì? Điều kiện để hoạt động hiệu quả?</span>
+      <span class="qa-arrow">▼</span>
+    </div>
+    <div class="qa-answer">
+      <p>Tree shaking = loại bỏ code không được dùng (dead code) khỏi bundle.</p>
+      <p><strong>Điều kiện cần:</strong></p>
+      <ul>
+        <li><strong>ESM (<code>import/export</code>)</strong>: Static analysis — bundler biết trước ai import gì. CJS (<code>require</code>) dynamic → không tree-shake được.</li>
+        <li><strong>Production mode</strong> (minification bật)</li>
+        <li><strong>Side-effect free</strong>: <code>package.json</code> có <code>"sideEffects": false</code></li>
+      </ul>
+      <pre>// ❌ Import cả lodash — 70KB
+import _ from 'lodash';
+const arr = _.flatten(nestedArr);
+
+// ✅ Named import từ lodash-es (ESM)
+import { flatten } from 'lodash-es'; // chỉ bundle flatten
+
+// ✅ Direct import
+import flatten from 'lodash/flatten';</pre>
+    </div>
+  </div>
+
+  <div class="qa-card" onclick="toggle(this)">
+    <div class="qa-question">
+      <span class="qa-num">75</span>
+      <span class="qa-q-text">Code splitting — dynamic import() hoạt động như thế nào?</span>
+      <span class="qa-arrow">▼</span>
+    </div>
+    <div class="qa-answer">
+      <p>Code splitting chia bundle thành nhiều chunks nhỏ, load on-demand.</p>
+      <pre>// Dynamic import — Webpack/Vite tự tạo async chunk
+const LazyChart = lazy(() =&gt; import('./components/Chart'));
+
+// Route-based splitting (React Router)
+const Dashboard = lazy(() =&gt; import('./pages/Dashboard'));
+const Settings = lazy(() =&gt; import('./pages/Settings'));
+&lt;Route path="/dashboard" element={&lt;Suspense fallback={&lt;Skeleton/&gt;}&gt;&lt;Dashboard/&gt;&lt;/Suspense&gt;} /&gt;
+
+// Magic comments — control chunk name &amp; prefetch
+const Chart = lazy(() =&gt; import(
+  /* webpackChunkName: "chart" */
+  /* webpackPrefetch: true */
+  './Chart'
+));</pre>
+      <div class="tip">Route-level splitting thường là win dễ nhất. Aim cho initial bundle < 200KB gzipped.</div>
+    </div>
+  </div>
+
+  <div class="qa-card" onclick="toggle(this)">
+    <div class="qa-question">
+      <span class="qa-num">76</span>
+      <span class="qa-q-text">Vendor chunk splitting — tại sao tách riêng, lợi ích về cache?</span>
+      <span class="qa-arrow">▼</span>
+    </div>
+    <div class="qa-answer">
+      <p>Tách vendor (node_modules) vào chunk riêng vì chúng <em>ít thay đổi</em> hơn app code.</p>
+      <pre>// webpack optimization
+optimization: {
+  splitChunks: {
+    cacheGroups: {
+      vendor: {
+        test: /node_modules/,
+        name: 'vendors',
+        chunks: 'all',
+      },
+      react: {
+        test: /node_modules\/(react|react-dom)/,
+        name: 'react-vendor',
+        chunks: 'all',
+      }
+    }
+  }
+}</pre>
+      <p><strong>Lợi ích:</strong> Khi bạn deploy code mới, <code>vendors.abc123.js</code> hash không đổi → browser dùng cached version. User chỉ cần download lại <code>main.xyz789.js</code>.</p>
+    </div>
+  </div>
+
+  <div class="qa-card" onclick="toggle(this)">
+    <div class="qa-question">
+      <span class="qa-num">77</span>
+      <span class="qa-q-text">Làm thế nào để phân tích bundle size? Tools nào?</span>
+      <span class="qa-arrow">▼</span>
+    </div>
+    <div class="qa-answer">
+      <pre># webpack-bundle-analyzer
+npm install -D webpack-bundle-analyzer
+// webpack.config.js
+const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer');
+plugins: [new BundleAnalyzerPlugin()]
+
+# Vite bundle visualizer
+npm install -D rollup-plugin-visualizer
+// vite.config.ts
+plugins: [visualizer({ open: true, gzipSize: true })]
+
+# source-map-explorer (framework agnostic)
+npm install -g source-map-explorer
+source-map-explorer 'build/static/js/*.js'</pre>
+      <div class="tip">Tìm các module chiếm % cao bất ngờ. VD: <code>moment.js</code> thường ~70KB — thay bằng <code>date-fns</code>.</div>
+    </div>
+  </div>
+
+  <div class="qa-card" onclick="toggle(this)">
+    <div class="qa-question">
+      <span class="qa-num">78</span>
+      <span class="qa-q-text">Vite khác Webpack ở điểm gì? Tại sao dev server của Vite nhanh hơn?</span>
+      <span class="qa-arrow">▼</span>
+    </div>
+    <div class="qa-answer">
+      <table>
+        <tr><th></th><th>Webpack (dev)</th><th>Vite (dev)</th></tr>
+        <tr><td>Startup</td><td>Bundle toàn bộ app trước</td><td>Không bundle — serve native ESM trực tiếp</td></tr>
+        <tr><td>HMR</td><td>Rebuild affected bundles</td><td>Chỉ invalidate file thay đổi (precise HMR)</td></tr>
+        <tr><td>Transform</td><td>Babel</td><td>esbuild (Go) — 10-100x nhanh hơn</td></tr>
+        <tr><td>Production</td><td>Webpack</td><td>Rollup (tree-shaking tốt hơn)</td></tr>
+      </table>
+      <p><strong>Lý do nhanh:</strong> Browser hỗ trợ native ESM — Vite chỉ transform file được request, không bundle upfront. App 1000 modules → chỉ load file đang dùng.</p>
+      <div class="tip">Cold start 10-100ms vs Webpack 10-60s với large projects. Hot update &lt; 50ms vs hàng giây.</div>
+    </div>
+  </div>
+
+  <div class="qa-card" onclick="toggle(this)">
+    <div class="qa-question">
+      <span class="qa-num">79</span>
+      <span class="qa-q-text">CJS vs ESM — sự khác nhau, tại sao ESM quan trọng với tree shaking?</span>
+      <span class="qa-arrow">▼</span>
+    </div>
+    <div class="qa-answer">
+      <table>
+        <tr><th></th><th>CommonJS (CJS)</th><th>ES Modules (ESM)</th></tr>
+        <tr><td>Syntax</td><td><code>require()</code> / <code>module.exports</code></td><td><code>import</code> / <code>export</code></td></tr>
+        <tr><td>Loading</td><td>Synchronous, runtime</td><td>Asynchronous, parse time</td></tr>
+        <tr><td>Analysis</td><td>Dynamic — không biết trước</td><td>Static — biết tại compile time</td></tr>
+        <tr><td>Tree shaking</td><td>❌ Không thể</td><td>✅ Hoàn toàn</td></tr>
+      </table>
+      <pre>// CJS — dynamic, không tree-shakeable
+const { flatten } = require('lodash'); // require() là function call runtime
+
+// ESM — static, tree-shakeable
+import { flatten } from 'lodash-es'; // bundler biết chính xác cần gì</pre>
+    </div>
+  </div>
+
+  <div class="qa-card" onclick="toggle(this)">
+    <div class="qa-question">
+      <span class="qa-num">80</span>
+      <span class="qa-q-text">Module Federation (Webpack 5) — giải quyết vấn đề gì?</span>
+      <span class="qa-arrow">▼</span>
+    </div>
+    <div class="qa-answer">
+      <p>Module Federation cho phép nhiều independent builds (micro-frontends) <em>share code tại runtime</em> — không cần bundle cùng nhau.</p>
+      <pre>// Shell app (host)
+plugins: [new ModuleFederationPlugin({
+  name: 'shell',
+  remotes: {
+    cartApp: 'cartApp@https://cart.example.com/remoteEntry.js',
+  },
+  shared: ['react', 'react-dom'] // share, không duplicate
+})]
+
+// Cart app (remote)
+plugins: [new ModuleFederationPlugin({
+  name: 'cartApp',
+  filename: 'remoteEntry.js',
+  exposes: { './Cart': './src/Cart' }
+})]
+
+// Dùng trong shell
+const Cart = lazy(() =&gt; import('cartApp/Cart'));</pre>
+      <div class="tip">Mỗi team deploy independent. Shell load code từ remote URL → cập nhật real-time không cần redeploy shell.</div>
+    </div>
+  </div>
+
+  <div class="qa-card" onclick="toggle(this)">
+    <div class="qa-question">
+      <span class="qa-num">81</span>
+      <span class="qa-q-text">Source map — các loại khác nhau, trade-off?</span>
+      <span class="qa-arrow">▼</span>
+    </div>
+    <div class="qa-answer">
+      <table>
+        <tr><th>Type</th><th>Build speed</th><th>Rebuild speed</th><th>Quality</th><th>Use</th></tr>
+        <tr><td><code>eval</code></td><td>Nhanh nhất</td><td>Nhanh nhất</td><td>Thấp (chỉ line)</td><td>Dev</td></tr>
+        <tr><td><code>cheap-module-source-map</code></td><td>Nhanh</td><td>Nhanh</td><td>Trung bình</td><td>Dev (khuyên dùng)</td></tr>
+        <tr><td><code>source-map</code></td><td>Chậm</td><td>Chậm</td><td>Cao nhất</td><td>Production</td></tr>
+        <tr><td><code>hidden-source-map</code></td><td>Chậm</td><td>Chậm</td><td>Cao</td><td>Prod (không expose)</td></tr>
+      </table>
+      <div class="tip">Production: dùng <code>source-map</code> và upload lên Sentry/error tracking, không serve publicly. Dùng <code>hidden-source-map</code> nếu không muốn user thấy source.</div>
+    </div>
+  </div>
+
+  <div class="qa-card" onclick="toggle(this)">
+    <div class="qa-question">
+      <span class="qa-num">82</span>
+      <span class="qa-q-text">ESBuild vs SWC vs Babel — khác nhau và khi nào dùng gì?</span>
+      <span class="qa-arrow">▼</span>
+    </div>
+    <div class="qa-answer">
+      <table>
+        <tr><th>Tool</th><th>Viết bằng</th><th>Speed</th><th>Extensible</th><th>Dùng trong</th></tr>
+        <tr><td>Babel</td><td>JavaScript</td><td>Chậm</td><td>Plugin phong phú</td><td>Legacy projects, complex transforms</td></tr>
+        <tr><td>SWC</td><td>Rust</td><td>~20x nhanh hơn Babel</td><td>Plugin system mới</td><td>Next.js, Vite (dùng @vitejs/plugin-react-swc)</td></tr>
+        <tr><td>ESBuild</td><td>Go</td><td>~100x nhanh hơn Babel</td><td>Ít plugin nhất</td><td>Vite (dep prebundling), tsx runner</td></tr>
+      </table>
+      <div class="tip">2024: Next.js dùng SWC mặc định, Vite dùng ESBuild cho dev. Babel vẫn cần cho các transform đặc biệt chưa có trong SWC/ESBuild.</div>
+    </div>
+  </div>
+
+  <div class="qa-card" onclick="toggle(this)">
+    <div class="qa-question">
+      <span class="qa-num">83</span>
+      <span class="qa-q-text">Content hash vs chunk hash trong output filename — khác nhau?</span>
+      <span class="qa-arrow">▼</span>
+    </div>
+    <div class="qa-answer">
+      <pre>// output.filename options
+filename: '[name].js'              // Không hash — cache bị break mỗi deploy
+filename: '[name].[hash].js'       // Hash từ toàn bộ compilation — mọi file đổi khi bất kỳ file thay đổi
+filename: '[name].[chunkhash].js'  // Hash từ chunk content — chỉ chunk thay đổi mới đổi hash
+filename: '[name].[contenthash].js'// Hash từ file content — granular nhất, tốt nhất cho caching</pre>
+      <div class="tip">Dùng <code>[contenthash]</code> cho production để maximize cache effectiveness. Chỉ file thực sự thay đổi mới có hash mới → user không cần re-download toàn bộ.</div>
+    </div>
+  </div>
+
+  <div class="qa-card" onclick="toggle(this)">
+    <div class="qa-question">
+      <span class="qa-num">84</span>
+      <span class="qa-q-text">browserslist config ảnh hưởng đến output bundle như thế nào?</span>
+      <span class="qa-arrow">▼</span>
+    </div>
+    <div class="qa-answer">
+      <pre># .browserslistrc
+> 1%           # browsers có market share > 1%
+last 2 versions # 2 major versions gần nhất mỗi browser
+not dead        # loại bỏ browsers không còn support</pre>
+      <p><strong>Ảnh hưởng:</strong></p>
+      <ul>
+        <li><strong>Babel/SWC</strong>: Target cũ hơn → transpile nhiều syntax ES2015+ hơn → bundle to hơn</li>
+        <li><strong>PostCSS Autoprefixer</strong>: Thêm vendor prefix (<code>-webkit-</code>, <code>-moz-</code>) tùy target</li>
+        <li><strong>Core-js polyfills</strong>: Thêm polyfill cho features không có trong target browsers</li>
+      </ul>
+      <div class="tip">Loại bỏ IE11 support thường giảm 10-20% bundle size. Dùng <code>npx browserslist</code> để xem danh sách browsers thực tế.</div>
+    </div>
+  </div>
+
+  <div class="qa-card" onclick="toggle(this)">
+    <div class="qa-question">
+      <span class="qa-num">85</span>
+      <span class="qa-q-text">Micro-frontend là gì? Bạn đã làm việc với nó chưa?</span>
+      <span class="qa-arrow">▼</span>
+    </div>
+    <div class="qa-answer">
+      <p>Micro-frontend = áp dụng microservices pattern vào frontend. Mỗi team owns một phần UI độc lập từ code → deploy → runtime.</p>
+      <p><strong>Approaches:</strong></p>
+      <ul>
+        <li><strong>Module Federation</strong>: Share components qua Webpack MF (xem câu 80)</li>
+        <li><strong>iFrame</strong>: Isolation tốt nhất, communication qua postMessage</li>
+        <li><strong>Web Components</strong>: Custom Elements, framework-agnostic</li>
+        <li><strong>Build-time integration</strong>: NPM packages — đơn giản nhưng cần rebuild khi update</li>
+      </ul>
+      <div class="warn"><strong>Trade-offs:</strong> Độc lập deploy tốt, nhưng phức tạp hơn monolith: bundle duplication, shared state, UX consistency, performance overhead.</div>
+    </div>
+  </div>
+
+  <div class="qa-card" onclick="toggle(this)">
+    <div class="qa-question">
+      <span class="qa-num">86</span>
+      <span class="qa-q-text">Monorepo vs multi-repo — kinh nghiệm và tools?</span>
+      <span class="qa-arrow">▼</span>
+    </div>
+    <div class="qa-answer">
+      <table>
+        <tr><th></th><th>Monorepo</th><th>Multi-repo</th></tr>
+        <tr><td>Code sharing</td><td>Dễ — import trực tiếp</td><td>Qua NPM packages</td></tr>
+        <tr><td>Atomic changes</td><td>1 PR thay đổi nhiều packages</td><td>Nhiều PRs, version sync phức tạp</td></tr>
+        <tr><td>CI/CD</td><td>Cần smart caching/affected detection</td><td>Độc lập, đơn giản hơn</td></tr>
+        <tr><td>Tools</td><td>Nx, Turborepo, pnpm workspaces</td><td>Standard</td></tr>
+      </table>
+      <pre># Turborepo — chỉ build/test affected packages
+turbo run build --filter=...my-changed-package
+# Nx affected
+nx affected:build --base=main</pre>
+    </div>
+  </div>
+
+  <div class="qa-card" onclick="toggle(this)">
+    <div class="qa-question">
+      <span class="qa-num">87</span>
+      <span class="qa-q-text">Vite production build — Rollup bên dưới, tại sao không dùng ESBuild cho production?</span>
+      <span class="qa-arrow">▼</span>
+    </div>
+    <div class="qa-answer">
+      <p>Vite dùng <strong>Rollup</strong> cho production build (không phải ESBuild) vì:</p>
+      <ul>
+        <li>Rollup có plugin ecosystem phong phú hơn</li>
+        <li>Code splitting và tree-shaking granular hơn</li>
+        <li>Output nhỏ hơn với complex splitting scenarios</li>
+        <li>ESBuild CSS code splitting còn chưa hoàn thiện (tại thời điểm Vite chọn Rollup)</li>
+      </ul>
+      <p>ESBuild vẫn được dùng trong Vite để: pre-bundle dependencies, transform TypeScript/JSX trong dev mode.</p>
+      <div class="tip">Vite 5+ đang thử nghiệm <strong>Rolldown</strong> — Rollup được viết lại bằng Rust, sẽ unify dev và prod build tool.</div>
+    </div>
+  </div>
+
+  <div class="qa-card" onclick="toggle(this)">
+    <div class="qa-question">
+      <span class="qa-num">88</span>
+      <span class="qa-q-text">Bạn giảm bundle size như thế nào trong dự án thực? Ví dụ cụ thể?</span>
+      <span class="qa-arrow">▼</span>
+    </div>
+    <div class="qa-answer">
+      <p><strong>Các wins phổ biến tôi đã làm:</strong></p>
+      <ul>
+        <li><strong>Replace moment.js → date-fns</strong>: 71KB → 8KB (chỉ import functions dùng)</li>
+        <li><strong>Replace lodash → lodash-es</strong>: Tree-shakeable, tiết kiệm 40-60KB</li>
+        <li><strong>Route-based code splitting</strong>: Initial bundle từ 800KB → 200KB</li>
+        <li><strong>Dynamic import chart library</strong>: Chỉ load khi user navigate đến chart page</li>
+        <li><strong>Replace icon library → SVG sprites</strong>: Tránh import toàn bộ icon set</li>
+        <li><strong>Compress với Brotli</strong> (tốt hơn gzip ~20%)</li>
+      </ul>
+      <div class="tip"><strong>Tip cho interview:</strong> Luôn đi kèm số liệu cụ thể — "từ Xkb xuống Ykb" hay "load time giảm Zms" sẽ được đánh giá cao hơn nhiều.</div>
+    </div>
+  </div>
+</div>
+
+</div><!-- /container -->
+
+<button class="back-top" onclick="window.scrollTo({top:0,behavior:'smooth'})">↑</button>
+
+<script>
+function toggle(card) {
+  const wasOpen = card.classList.contains('open');
+  card.classList.toggle('open', !wasOpen);
+}
+
+function scrollTo(id) {
+  document.getElementById(id).scrollIntoView({ behavior: 'smooth', block: 'start' });
+  document.querySelectorAll('.nav-tab').forEach(t => t.classList.remove('active'));
+  event.target.classList.add('active');
+}
+
+// Update active tab on scroll
+const sections = ['js','css','react','angular','auth','perf','bundle'];
+const tabs = document.querySelectorAll('.nav-tab');
+window.addEventListener('scroll', () => {
+  let current = 'js';
+  sections.forEach(id => {
+    const el = document.getElementById(id);
+    if (el && window.scrollY >= el.offsetTop - 100) current = id;
+  });
+  tabs.forEach((t, i) => t.classList.toggle('active', sections[i] === current));
+}, { passive: true });
+</script>
+</body>
+</html>
